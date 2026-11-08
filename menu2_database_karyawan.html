@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <title>2. Database Karyawan</title>
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
-    
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center gap-4">
-            <span class="text-3xl">🏛️</span>
-            <div>
-                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Multi-Page Dedicated Subsystem</p>
-            </div>
-        </div>
-        <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 border border-slate-700 px-4 py-2 rounded-xl transition shadow flex items-center gap-1.5">
-            🏠 Home Dashboard
-        </a>
+    <nav class="bg-slate-900 text-white p-5 flex justify-between items-center">
+        <span class="font-black text-blue-400">👥 2. DATABASE KARYAWAN</span>
+        <a href="index.html" class="bg-slate-800 text-amber-400 text-xs px-4 py-2 rounded-xl border border-slate-700 font-bold">🏠 Home Dashboard</a>
     </nav>
-
     <main class="max-w-5xl mx-auto p-6 mt-6 space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                <span class="text-3xl">👥</span>
-                <div>
-                    <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide">2. Database Karyawan</h2>
-                    <p class="text-xs text-slate-400">Manajemen data karyawan, penempatan divisi, brand, dan supervisor.</p>
-                </div>
+        <div class="bg-white p-6 rounded-3xl border shadow-sm space-y-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl text-xs font-semibold">
+                <input type="text" id="empId" placeholder="NIK Karyawan" class="p-2 border rounded-xl bg-white focus:outline-none" />
+                <input type="text" id="empName" placeholder="Nama Lengkap Karyawan" class="p-2 border rounded-xl bg-white focus:outline-none" />
+                <select id="empDiv" class="p-2 border rounded-xl bg-white"><option>1</option><option>2</option><option>3</option><option>4</option><option>SA</option><option>KASIR</option></select>
+                <select id="empSpv" class="p-2 border rounded-xl bg-white"><option>SRI WULANDARI</option><option>JERNI SANARIA</option><option>EKO PUTRA SETIAWAN</option><option>NURLINAWATI</option></select>
+                <select id="empMasa" class="p-2 border rounded-xl bg-white col-span-2">
+                    <script>
+                        for(let i=1; i<=26; i++) document.write(`<option value="${i} Hari Kerja">${i} Hari Kerja</option>`);
+                    </script>
+                </select>
+                <button onclick="addEmp()" class="bg-blue-600 text-white font-bold rounded-xl py-2 col-span-2 cursor-pointer">➕ Tambah Manual</button>
             </div>
-            
-<div class="space-y-4">
-    <div class="flex justify-between items-center bg-slate-50 p-4 rounded-xl border border-slate-200">
-        <span class="text-xs font-bold text-slate-600">Impor Massal Staf Baru via Template:</span>
-        <button class="bg-amber-600 text-white font-bold text-xs py-1.5 px-3 rounded-xl shadow">📥 Unduh Template (.xlsx)</button>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-        <input type="text" placeholder="NIK Karyawan" class="p-2 border rounded-xl bg-white" />
-        <input type="text" placeholder="Nama Lengkap" class="p-2 border rounded-xl bg-white" />
-        <select class="p-2 border rounded-xl bg-white"><option>Divisi 1</option><option>Divisi 2</option></select>
-        <button class="bg-blue-600 text-white font-bold rounded-xl py-2">➕ Tambah Manual</button>
-    </div>
-</div>
-
-        </div>
-        <div class="text-center">
-            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition bg-slate-200/50 hover:bg-slate-200 px-5 py-2.5 rounded-xl">&larr; Kembali ke Dashboard Utama</a>
+            <table class="w-full text-left text-xs">
+                <thead class="bg-slate-800 text-white font-bold uppercase"><tr><th class="p-2">Masa Kerja</th><th class="p-2">Div</th><th class="p-2">Employee ID</th><th class="p-2">Employee Name</th><th class="p-2">SPV</th><th class="p-2 text-center">Aksi</th></tr></thead>
+                <tbody id="empList" class="divide-y divide-slate-100"></tbody>
+            </table>
         </div>
     </main>
+    <script>
+        let dbEmp = JSON.parse(localStorage.getItem('MDS_EMPLOYEE_MASTER_DATABASE')) || [];
+        window.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('MDS_ADMIN_LOGGED_IN') !== 'true') { alert("Akses Ditolak!"); window.location.href="index.html"; }
+            renderTable();
+        });
+        function addEmp() {
+            let id = document.getElementById('empId').value.trim();
+            let name = document.getElementById('empName').value.trim();
+            let div = document.getElementById('empDiv').value;
+            let spv = document.getElementById('empSpv').value;
+            let masa = document.getElementById('empMasa').value;
+            if(!id || !name) return alert("Lengkapi NIK & Nama!");
+            dbEmp.push({ masa, prefix: "CV", div, id, name, spv });
+            localStorage.setItem('MDS_EMPLOYEE_MASTER_DATABASE', JSON.stringify(dbEmp));
+            document.getElementById('empId').value = ""; document.getElementById('empName').value = "";
+            renderTable();
+        }
+        function deleteEmp(i) { dbEmp.splice(i, 1); localStorage.setItem('MDS_EMPLOYEE_MASTER_DATABASE', JSON.stringify(dbEmp)); renderTable(); }
+        function renderTable() {
+            let tbody = document.getElementById('empList'); tbody.innerHTML = "";
+            dbEmp.forEach((emp, i) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td class="p-2 font-bold">${emp.masa}</td><td class="p-2 font-black">${emp.div}</td><td class="p-2 font-mono">${emp.id}</td><td class="p-2 font-bold">${emp.name}</td><td class="p-2">${emp.spv}</td><td class="p-2 text-center"><button onclick="deleteEmp(${i})" class="text-red-500 font-bold">Hapus</button></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
 </body>
 </html>
