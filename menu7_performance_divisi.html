@@ -1,44 +1,68 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <title>7. Performance Divisi</title>
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
-    
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center gap-4">
-            <span class="text-3xl">🏛️</span>
-            <div>
-                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Multi-Page Dedicated Subsystem</p>
-            </div>
-        </div>
-        <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 border border-slate-700 px-4 py-2 rounded-xl transition shadow flex items-center gap-1.5">
-            🏠 Home Dashboard
-        </a>
+    <nav class="bg-slate-900 text-white p-5 flex justify-between items-center shadow-md">
+        <span class="font-black text-amber-400">🛡️ 7. CLUSTER PERFORMANCE BY DIVISI</span>
+        <a href="index.html" class="bg-slate-800 text-amber-400 text-xs px-4 py-2 rounded-xl border border-slate-700 font-bold">🏠 Home Dashboard</a>
     </nav>
-
-    <main class="max-w-5xl mx-auto p-6 mt-6 space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                <span class="text-3xl">🛡️</span>
-                <div>
-                    <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide">7. Performance Divisi</h2>
-                    <p class="text-xs text-slate-400">Laporan perangkingan akumulasi total omset berdasarkan rumpun divisi.</p>
-                </div>
+    <main class="max-w-4xl mx-auto p-6 mt-6 space-y-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="text-xs font-black uppercase text-slate-700 tracking-wider">🛡️ Papan Akumulasi Rangking Kontribusi Omset Rumpun Divisi</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-slate-800 text-white font-bold uppercase">
+                        <tr><th class="p-2.5">Peringkat</th><th class="p-2.5">Cluster Divisi</th><th class="p-2.5 text-right">Total Akumulasi Penjualan MTD</th></tr>
+                    </thead>
+                    <tbody id="tbodyDivisiRank" class="divide-y divide-slate-100 font-semibold text-slate-700"></tbody>
+                </table>
             </div>
-            <div class="py-12 text-center text-slate-400 text-xs">Silakan hubungkan file data induk melalui modul upload untuk menampilkan infografis lembar kerja ini.</div>
         </div>
-        <div class="text-center">
-            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition bg-slate-200/50 hover:bg-slate-200 px-5 py-2.5 rounded-xl">&larr; Kembali ke Dashboard Utama</a>
-        </div>
+        <div class="text-center"><a href="index.html" class="text-xs text-slate-400 font-bold">&larr; Kembali ke Dashboard</a></div>
     </main>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            let dbEmp = JSON.parse(localStorage.getItem('MDS_EMPLOYEE_MASTER_DATABASE')) || [];
+            let dbKpi = JSON.parse(localStorage.getItem('MDS_KPI_HARIAN_STORAGE_DATABASE')) || {};
+            let tbody = document.getElementById('tbodyDivisiRank');
+            let fmt = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+
+            let salesMap = {};
+            Object.keys(dbKpi).forEach(date => {
+                dbKpi[date].forEach(row => {
+                    let parts = row.particulars.split('-');
+                    salesMap[parts[0].trim()] = (salesMap[parts[0].trim()] || 0) + (row.netSales || 0);
+                });
+            });
+
+            // Akumulasikan nominal rupiah per divisi kerja staf
+            let divSales = { "1":0, "2":0, "3":0, "4":0, "SA":0, "SU":0, "KASIR":0, "MAGANG":0 };
+            dbEmp.forEach(emp => {
+                let divCode = emp.div || "1";
+                if(divSales[divCode] !== undefined) {
+                    divSales[divCode] += (salesMap[emp.id] || 0);
+                }
+            });
+
+            // Urutkan peringkat divisi dari omset nominal terbesar
+            let sortedDivs = Object.keys(divSales).map(k => {
+                return { key: k, total: divSales[k] };
+            }).sort((a,b) => b.total - a.total);
+
+            sortedDivs.forEach((d, index) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-slate-500">Peringkat ${index + 1}</td>
+                    <td class="p-2.5 font-black uppercase text-slate-900">Rumpun Divisi ${d.key}</td>
+                    <td class="p-2.5 text-right font-black text-blue-600">${fmt.format(d.total)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
 </body>
 </html>
