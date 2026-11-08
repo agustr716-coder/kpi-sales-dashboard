@@ -1,342 +1,121 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDS 312 Lippo Plaza Jambi - Executive ERP Suite</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .menu-btn-active { background-color: #2563eb !important; color: white !important; font-weight: 800; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-        .locked-btn { border-color: #f87171 !important; color: #94a3b8 !important; }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased custom-scrollbar">
 
-    <!-- Top Navigation Header -->
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50">
+    <title>MDS 312 Lippo Plaza Jambi - Executive Control Center</title>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+    
+    <nav class="bg-slate-900 text-white shadow-xl px-8 py-6 flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center gap-4">
             <span class="text-3xl">🏛️</span>
             <div>
-                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Core ERP Terintegrasi</p>
+                <h1 class="text-2xl font-black tracking-wide uppercase text-blue-400">Executive Control Center</h1>
+                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Master Multi-File Framework</p>
             </div>
         </div>
-        
-        <!-- Admin Authentication Toggle -->
-        <div class="flex items-center gap-4">
-            <div id="adminStatusBadge" class="text-xs font-bold uppercase px-3 py-1.5 bg-slate-800 rounded-lg text-slate-400 border border-slate-700">
-                🔒 Mode: Public View
-            </div>
-            <button onclick="triggerAdminAuthAction()" id="btnAdminLoginToggle" class="bg-blue-600 hover:bg-blue-700 text-xs font-bold text-white px-4 py-2 rounded-xl transition cursor-pointer shadow">
-                🔑 Login Admin
-            </button>
+        <div class="text-xs font-bold uppercase px-3 py-1.5 bg-slate-800 rounded-lg text-slate-400 border border-slate-700">
+            🟢 System Online
         </div>
     </nav>
 
-    <!-- Master Workspace Container -->
-    <main class="max-w-7xl mx-auto p-6 space-y-6">
-
-        <!-- 9 MENUS PERMANENT SYSTEM HUBS -->
-        <section class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3">
-            <p class="text-xs font-black text-slate-400 uppercase tracking-widest">⚙️ DASHBOARD CONTROL HUB:</p>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                <button onclick="secureTabRedirect('panel-input-kpi')" id="btn-panel-input-kpi" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center locked-btn border border-dashed">
-                    📥 1. Input KPI [🔒]
-                </button>
-                <button onclick="secureTabRedirect('panel-db-karyawan')" id="btn-panel-db-karyawan" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center locked-btn border border-dashed">
-                    👥 2. Database Karyawan [🔒]
-                </button>
-                <button onclick="secureTabRedirect('panel-breakdown-target')" id="btn-panel-breakdown-target" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center menu-btn-active">
-                    🎯 3. Menu Target Breakdown
-                </button>
-                <button onclick="secureTabRedirect('panel-plan-day')" id="btn-panel-plan-day" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center locked-btn border border-dashed">
-                    📅 4. Plan By Day [🔒]
-                </button>
-                <button onclick="secureTabRedirect('panel-acv-mtd')" id="btn-panel-acv-mtd" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center">
-                    🏆 5. ACV MTD
-                </button>
-                <button onclick="secureTabRedirect('panel-summary-mtd')" id="btn-panel-summary-mtd" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center">
-                    📊 6. Summary MTD (SPV)
-                </button>
-                <button onclick="secureTabRedirect('panel-performance-divisi')" id="btn-panel-performance-divisi" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center">
-                    🛡️ 7. Performance Divisi
-                </button>
-                <button onclick="secureTabRedirect('panel-performance-rank-mtd')" id="btn-panel-performance-rank-mtd" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center">
-                    👑 8. Performance Rank MTD
-                </button>
-                <button onclick="secureTabRedirect('panel-performance-rank-day')" id="btn-panel-performance-rank-day" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold text-center col-span-2 sm:col-span-1">
-                    ⚡ 9. Rank By Day Perorang
-                </button>
-            </div>
-        </section>
-
-        <!-- SECURITY BLOCKED WARNING -->
-        <div id="adminLockOverlayMessage" class="bg-white rounded-3xl p-10 border border-slate-100 text-center space-y-4 shadow-sm workspace-panel hidden">
-            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto text-2xl">🚫</div>
-            <h3 class="text-base font-extrabold text-slate-800">Akses Terbatas - Menu Khusus Admin</h3>
-            <p class="text-xs text-slate-400 max-w-md mx-auto">Silakan klik tombol <b>Login Admin</b> di pojok kanan atas untuk membuka panel input rahasia ini.</p>
+    <main class="max-w-6xl mx-auto p-8 space-y-8">
+        <div class="text-center py-4">
+            <h2 class="text-xl font-black text-slate-700 uppercase tracking-wide">Silakan Pilih Modul Manajemen Operasional Ritel</h2>
+            <p class="text-xs text-slate-400 mt-1">Aplikasi Sistem ERP Terdistribusi Mandiri Bebas Cache</p>
         </div>
 
-        <!-- 3. MENU TARGET BREAKDOWN (PERFECT MATCH WITH IMAGE) -->
-        <section id="panel-breakdown-target" class="workspace-panel space-y-6">
+        <!-- Matrix Hub Grid Link Layout Grid System -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- Target Logic Master Header Calculator Box -->
-            <div class="bg-slate-900 text-white p-5 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-lg">
-                <div class="space-y-1">
-                    <h3 class="text-xs font-black tracking-widest text-blue-400 uppercase">📈 Rumus Kalkulator Breakdown</h3>
-                    <p class="text-[10px] text-slate-400">Masukkan nilai sales bulan lalu (Sales LY) untuk menghitung otomatis target berjalan (+10%).</p>
+            <a href="menu1_input_kpi.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">📥</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">1. Input KPI Sales Person</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Pintu masuk laporan berkas penjualan harian kasir. Data dikunci aman ke memori.</p>
                 </div>
-                <div>
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Sales Bulan Lalu (Ly):</label>
-                    <input type="number" id="inputSalesLy" value="3319332937" oninput="calculateLiveTargetBreakdown()" class="w-full text-xs px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl focus:outline-none font-bold text-amber-400" />
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
+
+            <a href="menu2_database_karyawan.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">👥</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">2. Database Karyawan</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Pengelolaan master data biodata profil staf, merek brand dagang, divisi, dan nama SPV.</p>
                 </div>
-                <div class="p-3 bg-slate-800 rounded-2xl border border-slate-700">
-                    <span class="text-[9px] font-bold text-slate-400 uppercase block">Target Bulan Berjalan (Up 10%):</span>
-                    <span class="text-base font-black text-emerald-400" id="txtCalculatedUp10">Rp 3.651.266.231</span>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
+
+            <a href="menu3_target_breakdown.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">🎯</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">3. Menu Target Breakdown</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Kalkulator proporsional dinamis otomatis berbasis porsi rumus Sales LY + 10%.</p>
                 </div>
-            </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
 
-            <!-- Double Grid Matrix Layout mimicking the exact columns from the sheet image -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                
-                <!-- LEFT AREA (7 Columns): Jam Kerja Breakdown Matrix (A to E) -->
-                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden lg:col-span-5">
-                    <div class="px-4 py-3 bg-slate-800 text-white font-bold text-xs uppercase tracking-wider">
-                        📊 Matrix Jam Kerja & Manpower
-                    </div>
-                    <div class="overflow-x-auto custom-scrollbar max-h-[600px]">
-                        <table class="w-full text-left border-collapse text-[11px]">
-                            <thead class="bg-slate-100 text-slate-600 font-bold sticky top-0 uppercase border-b border-slate-200">
-                                <tr>
-                                    <th class="p-2">Jam Kerja</th>
-                                    <th class="p-2 text-right">Target / Orang</th>
-                                    <th class="p-2 text-center">Manpower</th>
-                                    <th class="p-2 text-right">Total Target</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyJamKerjaMatrix" class="divide-y divide-slate-100 font-medium text-slate-700">
-                                <!-- Populated dynamically from state rows -->
-                            </tbody>
-                        </table>
-                    </div>
+            <a href="menu4_plan_by_day.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">📅</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">4. Plan By Day</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Distribusi kuota target rupiah harian berdasarkan matriks hari Weekday vs Weekend.</p>
                 </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
 
-                <!-- RIGHT AREA (5 Columns): BY DIVISI & Day Matrix Grid Distribution (K to T) -->
-                <div class="space-y-6 lg:col-span-7">
-                    
-                    <!-- Top Right Matrix: BY DIVISI Comparison Grid -->
-                    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                        <div class="px-4 py-3 bg-slate-800 text-white font-bold text-xs uppercase tracking-wider">
-                            🛡️ Alokasi Target By Divisi
-                        </div>
-                        <table class="w-full text-left border-collapse text-[11px]">
-                            <thead class="bg-slate-100 text-slate-600 font-bold uppercase border-b border-slate-200">
-                                <tr>
-                                    <th class="p-2">Divisi</th>
-                                    <th class="p-2 text-right">Actual Omset</th>
-                                    <th class="p-2 text-right">Target Alokasi</th>
-                                    <th class="p-2 text-center">Manpower</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyDivisiMatrix" class="divide-y divide-slate-100 font-semibold text-slate-700">
-                                <!-- Injected dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Bottom Right Matrix: Working Days Distribution Matrix Grids (1-9 & 16-24) -->
-                    <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-4">
-                        <h4 class="text-xs font-black uppercase text-slate-600 tracking-wider">📅 Matriks Distribusi Hari Kerja Per Divisi</h4>
-                        
-                        <!-- Grid Block 1-9 Days -->
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full border-collapse text-[10px] text-center border border-slate-200">
-                                <thead class="bg-slate-50 font-bold text-slate-600">
-                                    <tr>
-                                        <th class="border border-slate-200 p-1">Divisi</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">1 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">2 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">3 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">4 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">5 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">6 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-green-50 text-green-700">7 Hari</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="font-medium">
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 1</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 2</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 3</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 4</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">1</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">SA</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Grid Block 16-24 Days -->
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full border-collapse text-[10px] text-center border border-slate-200">
-                                <thead class="bg-slate-50 font-bold text-slate-600">
-                                    <tr>
-                                        <th class="border border-slate-200 p-1">Divisi</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">16 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">17 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">18 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">19 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">20 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">21 Hari</th>
-                                        <th class="border border-slate-200 p-1 bg-emerald-50 text-emerald-700">22 Hari</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="font-medium">
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 1</td><td class="border border-slate-200">4</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">4</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 2</td><td class="border border-slate-200">5</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">8</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 3</td><td class="border border-slate-200">2</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">3</td><td class="border border-slate-200">3</td><td class="border border-slate-200">-</td><td class="border border-slate-200">2</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">Div 4</td><td class="border border-slate-200">2</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">2</td><td class="border border-slate-200">6</td><td class="border border-slate-200">-</td><td class="border border-slate-200">1</td></tr>
-                                    <tr><td class="border border-slate-200 font-bold bg-slate-50">SA</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td><td class="border border-slate-200">-</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <a href="menu5_acv-mtd.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">🏆</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">5. ACV MTD</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Lembar komparasi pencapaian akumulatif aktual berjalan terhadap pagu target.</p>
                 </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
 
-            </div>
+            <a href="menu6_summary_mtd.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">📊</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">6. Summary MTD (SPV)</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Infografis sebaran kategori performa Diamond, Gold, Silver terbagi per Supervisor.</p>
+                </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
+
+            <a href="menu7_performance_divisi.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">🛡️</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">7. Performance Divisi</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Klaster laporan pengurutan kontribusi peringkat omset antar grup rumpun divisi.</p>
+                </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
+
+            <a href="menu8_performance_rank_mtd.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">👑</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">8. Performance Rank MTD</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Papan peringkat utama global (Leaderboard) satu pintu lintas seluruh jajaran sales.</p>
+                </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
+
+            <a href="menu9_performance_rank_day.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
+                <div class="space-y-2">
+                    <span class="text-3xl block group-hover:scale-110 transition duration-200">⚡</span>
+                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">9. Rank By Day Perorang</h3>
+                    <p class="text-[11px] text-slate-400 leading-normal">Analisis detail efisiensi target harian individu sales person dari hari ke hari.</p>
+                </div>
+                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
+            </a>
+
         </section>
-
-        <!-- OTHER SYSTEM TAB MODULE PANELS -->
-        <section id="panel-input-kpi" class="workspace-panel hidden bg-white p-6 rounded-3xl border border-slate-100"></section>
-        <section id="panel-db-karyawan" class="workspace-panel hidden bg-white p-6 rounded-3xl border border-slate-100"></section>
-        <section id="panel-plan-day" class="workspace-panel hidden bg-white p-6 rounded-3xl border border-slate-100"></section>
-        <section id="panel-acv-mtd" class="workspace-panel hidden bg-white p-6 rounded-3xl border border-slate-100"></section>
-        <section id="panel-summary-mtd" class="workspace-panel hidden bg-white p-6 rounded-3xl border border-slate-100"></section>
-        <section id="panel-performance-divisi" class="workspace-panel hidden bg-white p-6 rounded-3xl border border-slate-100"></section>
-        <section id="panel-performance-rank-mtd" class="workspace-panel hidden bg-white p-6 rounded-2xl border border-slate-100"></section>
-        <section id="panel-performance-rank-day" class="workspace-panel hidden bg-white p-6 rounded-2xl border border-slate-100"></section>
-
     </main>
-
-    <script>
-        let isAdminLoggedIn = false;
-        const CONFIRMED_ADMIN_PASSWORD = "adminmds312";
-
-        // Raw array mapping matrix data parsed directly from user's image metrics rows
-        let jamKerjaState = [
-            { name: "Full Time", target: 26967649, manpower: 51 },
-            { name: "On Off", target: 21327480, manpower: 5 },
-            { name: "2-3 Hari", target: 17061982, manpower: 0 },
-            { name: "Kasir", target: 10000000, manpower: 7 },
-            { name: "SA", target: 36967649, manpower: 14 },
-            { name: "MAGANG", target: 5000000, manpower: 0 },
-            { name: "1 Hari", target: 1421835, manpower: 0 },
-            { name: "4 Hari", target: 5687331, manpower: 1 },
-            { name: "16 Hari", target: 22749322, manpower: 13 },
-            { name: "18 Hari", target: 25592988, manpower: 5 },
-            { name: "20 Hari", target: 28436653, manpower: 21 },
-            { name: "22 Hari", target: 31280318, manpower: 3 }
-        ];
-
-        let divisiState = [
-            { code: "Div 1", actual: 554514731, target: 554514731, mp: 20 },
-            { code: "Div 2", actual: 895754566, target: 895754566, mp: 28 },
-            { code: "Div 3", actual: 1273962049, target: 1273962049, mp: 38 },
-            { code: "Div 4", actual: 409487802, target: 409487802, mp: 14 },
-            { code: "SA", actual: 517547083, target: 517547083, mp: 14 }
-        ];
-
-        window.addEventListener('DOMContentLoaded', () => {
-            calculateLiveTargetBreakdown();
-        });
-
-        function changeWorkspace(id) {
-            document.querySelectorAll('.workspace-panel').forEach(p => p.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-            document.querySelectorAll('button').forEach(b => { if(b.id && b.id.startsWith('btn-panel-')) b.classList.remove('menu-btn-active'); });
-            let t = document.getElementById('btn-' + id); if(t) t.classList.add('menu-btn-active');
-        }
-
-        function secureTabRedirect(panelId) {
-            const secureList = ['panel-input-kpi', 'panel-db-karyawan', 'panel-plan-day'];
-            if(secureList.includes(panelId) && !isAdminLoggedIn) { changeWorkspace('adminLockOverlayMessage'); return; }
-            changeWorkspace(panelId);
-        }
-
-        function triggerAdminAuthAction() {
-            if (isAdminLoggedIn) {
-                isAdminLoggedIn = false; document.getElementById('adminStatusBadge').textContent = "🔒 Mode: Public View";
-                document.getElementById('btnAdminLoginToggle').textContent = "🔑 Login Admin";
-                secureTabRedirect('panel-breakdown-target');
-            } else {
-                let p = prompt("Masukkan Sandi Admin:");
-                if (p === CONFIRMED_ADMIN_PASSWORD) {
-                    isAdminLoggedIn = true; document.getElementById('adminStatusBadge').textContent = "🔓 Mode: Full Admin Access";
-                    document.getElementById('btnAdminLoginToggle').textContent = "🔒 Keluar Admin";
-                }
-            }
-        }
-
-        function fmt(v) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v || 0); }
-
-        // EXPLICIT LIVE FORMULA COMPUTATION ENGINE MATCHING SPREADSHEET EXACT CELL BEHAVIORS
-        function calculateLiveTargetBreakdown() {
-            let ly = parseFloat(document.getElementById('inputSalesLy').value) || 0;
-            let up10 = Math.round(ly * 1.10);
-            
-            document.getElementById('txtCalculatedUp10').textContent = fmt(up10);
-
-            // Re-render Left Table Grid Matrix
-            const tbodyLeft = document.getElementById('tbodyJamKerjaMatrix');
-            tbodyLeft.innerHTML = '';
-            
-            let globalTotalTarget = 0;
-            jamKerjaState.forEach(row => {
-                let totalTarget = row.target * row.manpower;
-                globalTotalTarget += totalTarget;
-
-                let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 border-b border-slate-100";
-                tr.innerHTML = `
-                    <td class="p-2 font-bold text-slate-900">${row.name}</td>
-                    <td class="p-2 text-right font-mono text-slate-500">${fmt(row.target)}</td>
-                    <td class="p-2 text-center font-bold text-blue-600">${row.manpower}</td>
-                    <td class="p-2 text-right font-black">${fmt(totalTarget)}</td>
-                `;
-                tbodyLeft.appendChild(tr);
-            });
-
-            // Add sum summary row matching row 5 TOTAL field on the sheet
-            let trSum = document.createElement('tr');
-            trSum.className = "bg-amber-50 font-black border-t border-slate-300";
-            trSum.innerHTML = `<td class="p-2 uppercase text-slate-800">🎯 TOTAL GABUNGAN:</td><td colspan="2"></td><td class="p-2 text-right text-emerald-700">${fmt(globalTotalTarget)}</td>`;
-            tbodyLeft.appendChild(trSum);
-
-            // Re-render Top Right Divisi Matrix 
-            const tbodyRight = document.getElementById('tbodyDivisiMatrix');
-            tbodyRight.innerHTML = '';
-            let sumAct = 0; let sumTgt = 0; let sumMp = 0;
-
-            divisiState.forEach(d => {
-                sumAct += d.actual; sumTgt += d.target; sumMp += d.mp;
-                let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 border-b border-slate-100";
-                tr.innerHTML = `
-                    <td class="p-2 font-bold">${d.code}</td>
-                    <td class="p-2 text-right text-slate-600 font-mono">${fmt(d.actual)}</td>
-                    <td class="p-2 text-right text-slate-900 font-mono">${fmt(d.target)}</td>
-                    <td class="p-2 text-center text-blue-600">${d.mp}</td>
-                `;
-                tbodyRight.appendChild(tr);
-            });
-
-            let trDivSum = document.createElement('tr');
-            trDivSum.className = "bg-blue-50 font-black border-t-2 border-slate-300 text-slate-900";
-            trDivSum.innerHTML = `<td class="p-2 uppercase">TOTAL DIVISI:</td><td class="p-2 text-right">${fmt(sumAct)}</td><td class="p-2 text-right text-blue-700">${fmt(sumTgt)}</td><td class="p-2 text-center">${sumMp}</td>`;
-            tbodyRight.appendChild(trDivSum);
-        }
-    </script>
 </body>
 </html>
