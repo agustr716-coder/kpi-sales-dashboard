@@ -1,121 +1,67 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <title>MDS 312 Lippo Plaza Jambi - Executive Control Center</title>
+    <title>Dashboard Utama - MDS 312</title>
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
-    
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-6 flex justify-between items-center sticky top-0 z-50">
+    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center gap-4">
             <span class="text-3xl">🏛️</span>
             <div>
-                <h1 class="text-2xl font-black tracking-wide uppercase text-blue-400">Executive Control Center</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Master Multi-File Framework</p>
+                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
+                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Portal Utama</p>
             </div>
         </div>
-        <div class="text-xs font-bold uppercase px-3 py-1.5 bg-slate-800 rounded-lg text-slate-400 border border-slate-700">
-            🟢 System Online
+        <div class="flex items-center gap-4">
+            <div id="adminStatusBadge" class="text-xs font-bold uppercase px-3 py-1.5 bg-slate-800 rounded-lg text-slate-400 border border-slate-700">🔒 Mode: Public View</div>
+            <button onclick="triggerAdminAuthAction()" id="btnAdminLoginToggle" class="bg-blue-600 hover:bg-blue-700 text-xs font-bold text-white px-4 py-2 rounded-xl cursor-pointer transition shadow">🔑 Login Admin</button>
         </div>
     </nav>
-
     <main class="max-w-6xl mx-auto p-8 space-y-8">
-        <div class="text-center py-4">
-            <h2 class="text-xl font-black text-slate-700 uppercase tracking-wide">Silakan Pilih Modul Manajemen Operasional Ritel</h2>
-            <p class="text-xs text-slate-400 mt-1">Aplikasi Sistem ERP Terdistribusi Mandiri Bebas Cache</p>
+        <div class="text-center py-4"><h2 class="text-xl font-black text-slate-700 uppercase tracking-wide">PILIH MODUL MANAJEMEN OPERASIONAL RITEL</h2></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="menuGridHub">
+            <a href="menu1_input_kpi.html" class="bg-white p-6 rounded-3xl border border-dashed border-red-200 shadow-sm hover:shadow-xl transition block space-y-2" id="card-m1">
+                <span class="text-3xl block">📥</span><h3 class="font-bold text-sm text-slate-800 uppercase">1. Input KPI Sales Person <span class="text-red-500 font-black text-[11px]" id="lock-m1">[🔒]</span></h3>
+            </a>
+            <a href="menu2_database_karyawan.html" class="bg-white p-6 rounded-3xl border border-dashed border-red-200 shadow-sm hover:shadow-xl transition block space-y-2" id="card-m2">
+                <span class="text-3xl block">👥</span><h3 class="font-bold text-sm text-slate-800 uppercase">2. Database Karyawan <span class="text-red-500 font-black text-[11px]" id="lock-m2">[🔒]</span></h3>
+            </a>
+            <a href="menu3_target_breakdown.html" class="bg-white p-6 rounded-3xl border border-dashed border-red-200 shadow-sm hover:shadow-xl transition block space-y-2" id="card-m3">
+                <span class="text-3xl block">🎯</span><h3 class="font-bold text-sm text-slate-800 uppercase">3. Target Breakdown <span class="text-red-500 font-black text-[11px]" id="lock-m3">[🔒]</span></h3>
+            </a>
         </div>
-
-        <!-- Matrix Hub Grid Link Layout Grid System -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <a href="menu1_input_kpi.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">📥</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">1. Input KPI Sales Person</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Pintu masuk laporan berkas penjualan harian kasir. Data dikunci aman ke memori.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu2_database_karyawan.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">👥</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">2. Database Karyawan</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Pengelolaan master data biodata profil staf, merek brand dagang, divisi, dan nama SPV.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu3_target_breakdown.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">🎯</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">3. Menu Target Breakdown</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Kalkulator proporsional dinamis otomatis berbasis porsi rumus Sales LY + 10%.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu4_plan_by_day.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">📅</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">4. Plan By Day</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Distribusi kuota target rupiah harian berdasarkan matriks hari Weekday vs Weekend.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu5_acv-mtd.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">🏆</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">5. ACV MTD</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Lembar komparasi pencapaian akumulatif aktual berjalan terhadap pagu target.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu6_summary_mtd.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">📊</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">6. Summary MTD (SPV)</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Infografis sebaran kategori performa Diamond, Gold, Silver terbagi per Supervisor.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu7_performance_divisi.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">🛡️</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">7. Performance Divisi</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Klaster laporan pengurutan kontribusi peringkat omset antar grup rumpun divisi.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu8_performance_rank_mtd.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">👑</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">8. Performance Rank MTD</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Papan peringkat utama global (Leaderboard) satu pintu lintas seluruh jajaran sales.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-            <a href="menu9_performance_rank_day.html" class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition group flex flex-col justify-between space-y-4">
-                <div class="space-y-2">
-                    <span class="text-3xl block group-hover:scale-110 transition duration-200">⚡</span>
-                    <h3 class="font-extrabold text-sm text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2">9. Rank By Day Perorang</h3>
-                    <p class="text-[11px] text-slate-400 leading-normal">Analisis detail efisiensi target harian individu sales person dari hari ke hari.</p>
-                </div>
-                <span class="text-[10px] font-black text-blue-600 uppercase flex items-center gap-1">Buka Modul &rarr;</span>
-            </a>
-
-        </section>
     </main>
+    <script>
+        const CONFIRMED_ADMIN_PASSWORD = "adminmds312";
+        function checkAdminGlobalStatus() {
+            let status = localStorage.getItem('MDS_ADMIN_LOGGED_IN') === 'true';
+            document.getElementById('adminStatusBadge').textContent = status ? "🔓 Mode: Full Admin Access" : "🔒 Mode: Public View";
+            document.getElementById('btnAdminLoginToggle').textContent = status ? "🔒 Keluar Admin" : "🔑 Login Admin";
+            ['m1', 'm2', 'm3'].forEach(id => {
+                let lockIndicator = document.getElementById('lock-'+id);
+                if(lockIndicator) lockIndicator.textContent = status ? " [🔓]" : " [🔒]";
+            });
+        }
+        function triggerAdminAuthAction() {
+            let status = localStorage.getItem('MDS_ADMIN_LOGGED_IN') === 'true';
+            if(status) { localStorage.setItem('MDS_ADMIN_LOGGED_IN', 'false'); }
+            else {
+                let p = prompt("Masukkan Sandi Keamanan Admin:");
+                if(p === CONFIRMED_ADMIN_PASSWORD) localStorage.setItem('MDS_ADMIN_LOGGED_IN', 'true');
+            }
+            checkAdminGlobalStatus();
+        }
+        document.getElementById('menuGridHub').addEventListener('click', (e) => {
+            let targetLink = e.target.closest('a');
+            if(!targetLink) return;
+            let href = targetLink.getAttribute('href');
+            let isAdmin = localStorage.getItem('MDS_ADMIN_LOGGED_IN') === 'true';
+            if(!isAdmin) { e.preventDefault(); alert("Akses Ditolak! Masukkan sandi admin di kanan atas."); }
+        });
+        window.addEventListener('DOMContentLoaded', checkAdminGlobalStatus);
+    </script>
 </body>
 </html>
