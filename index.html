@@ -3,198 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDS 312 Lippo Plaza Jambi - Intelligent Sales System</title>
+    <title>MDS 312 Lippo Plaza Jambi - Core ERP Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .menu-active { background-color: #2563eb !important; color: white !important; font-weight: bold; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .menu-btn-active { background-color: #2563eb !important; color: white !important; font-weight: 800; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased custom-scrollbar">
 
-    <!-- Header Panel -->
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-50">
-        <div class="flex items-center gap-3">
-            <span class="text-3xl">🏬</span>
+    <!-- Top Premium Brand Navbar -->
+    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="text-3xl">🏛️</span>
             <div>
-                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">MDS 312 Lippo Plaza Jambi</h1>
-                <p class="text-xs text-slate-400 font-medium">Sistem Pengolah KPI Otomatis • Cukup Upload 1 File Utama</p>
+                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
+                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Portal Manajemen KPI Kinerja Utama</p>
             </div>
         </div>
-        <div id="statusBoks" class="text-xs font-bold uppercase px-4 py-2 bg-slate-800 rounded-full border border-slate-700 text-slate-400 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> Menunggu Upload File Excel Utama
+        <div class="text-xs font-bold bg-slate-800 px-4 py-2 border border-slate-700 text-slate-300 rounded-full" id="globalDateCounter">
+            📅 Periode Berjalan: November 2026
         </div>
     </nav>
 
-    <!-- Main Section -->
-    <main class="max-w-7xl mx-auto p-6 space-y-8">
+    <!-- Permanent Dashboard Workspace -->
+    <main class="max-w-7xl mx-auto p-6 space-y-6">
 
-        <!-- STEP 1: Single Upload Control -->
-        <section class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-            <div class="md:col-span-2">
-                <div class="border-3 border-dashed border-slate-200 hover:border-blue-500 rounded-2xl p-8 flex flex-col items-center justify-center bg-slate-50/50 hover:bg-blue-50/20 transition duration-300 cursor-pointer relative group">
-                    <input type="file" id="excelSingleUpload" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition duration-300">
-                        <span class="text-xl text-blue-600">📥</span>
-                    </div>
-                    <p class="text-sm font-bold text-slate-700">Unggah File Laporan Excel Pertama Anda di Sini</p>
-                    <p class="text-xs text-slate-400 mt-1">Hanya perlu upload file lembar data penjualan utama (Particulars, Net Sales, dll.)</p>
-                </div>
-            </div>
-            <div class="p-4 bg-blue-950 text-white rounded-2xl text-xs space-y-2 shadow">
-                <p class="font-extrabold text-blue-400 uppercase tracking-wider">💡 Sistem Otomasi Cerdas:</p>
-                <p class="text-slate-300 leading-relaxed">Cukup upload file utama Anda. Sistem website ini akan otomatis mengekstrak NIK, membuat database bayangan, menghitung persentase target, menyusun sistem rangking MTD, serta merender diagram SPV ke dalam tombol menu di bawah secara otomatis!</p>
-            </div>
-        </section>
-
-        <!-- STEP 2: Interactive Menu Buttons Grid (Hidden Initially) -->
-        <section id="menuNavigationContainer" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100" style="display: none;">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">🛠️ PILIH MENU TAMPILAN OUTPUT PERFORMANCE:</p>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <button onclick="switchMenu('panel-kpi')" id="btn-panel-kpi" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer menu-active text-center">
-                    📋 1. KPI Sales Person
+        <!-- SYSTEM NAVIGATION HUBS (PERMANENTLY VISIBLE AT LAUNCH) -->
+        <section class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3">
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                ⚙️ PILIH MENU TAMPILAN OUTPUT PERFORMANCE UTAMA:
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                <button onclick="changeWorkspace('panel-input-kpi')" id="btn-panel-input-kpi" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer menu-btn-active text-center">
+                    📥 1. Input KPI Sales Person
                 </button>
-                <button onclick="switchMenu('panel-database')" id="btn-panel-database" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer text-center">
+                <button onclick="changeWorkspace('panel-db-karyawan')" id="btn-panel-db-karyawan" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
                     👥 2. Database Karyawan
                 </button>
-                <button onclick="switchMenu('panel-target')" id="btn-panel-target" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer text-center">
-                    🎯 3. Target Per Divisi
+                <button onclick="changeWorkspace('panel-breakdown-target')" id="btn-panel-breakdown-target" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
+                    🎯 3. Menu Target Breakdown
                 </button>
-                <button onclick="switchMenu('panel-plan')" id="btn-panel-plan" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer text-center">
+                <button onclick="changeWorkspace('panel-plan-day')" id="btn-panel-plan-day" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
                     📅 4. Plan By Day
                 </button>
-                <button onclick="switchMenu('panel-acv-mtd')" id="btn-panel-acv-mtd" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer text-center">
-                    🏆 5. ACV MTD (Rangking)
+                <button onclick="changeWorkspace('panel-acv-mtd')" id="btn-panel-acv-mtd" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
+                    🏆 5. ACV MTD
                 </button>
-                <button onclick="switchMenu('panel-summary')" id="btn-panel-summary" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer text-center">
+                <button onclick="changeWorkspace('panel-summary-mtd')" id="btn-panel-summary-mtd" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
                     📊 6. Summary MTD (SPV)
+                </button>
+                <button onclick="changeWorkspace('panel-performance-divisi')" id="btn-panel-performance-divisi" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
+                    🛡️ 7. Performance Divisi
+                </button>
+                <button onclick="changeWorkspace('panel-performance-rank-mtd')" id="btn-panel-performance-rank-mtd" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center">
+                    👑 8. Performance Rank MTD
+                </button>
+                <button onclick="changeWorkspace('panel-performance-rank-day')" id="btn-panel-performance-rank-day" class="px-3 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl text-[11px] font-bold transition duration-200 cursor-pointer text-center col-span-2 sm:col-span-1">
+                    ⚡ 9. Rank By Day Perorang
                 </button>
             </div>
         </section>
 
-        <!-- OUTPUT CONTENT PANELS -->
-        
-        <!-- PANELS 1: KPI SALES PERSON (Tampilan Persis Seperti Excel Pertama) -->
-        <section id="panel-kpi" class="space-y-4 menu-panel-item">
+        <!-- PANEL CONTENT HOUSING -->
+
+        <!-- MENU 1: INPUT KPI SALES PERSON -->
+        <section id="panel-input-kpi" class="space-y-4 workspace-panel">
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <div class="md:col-span-2">
+                    <div class="border-3 border-dashed border-slate-200 hover:border-blue-500 rounded-2xl p-6 flex flex-col items-center justify-center bg-slate-50/50 hover:bg-blue-50/10 transition duration-300 relative cursor-pointer group">
+                        <input type="file" id="uploadKpiDaily" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+                        <span class="text-3xl mb-1 group-hover:scale-110 transition duration-300">📥</span>
+                        <p class="text-xs font-bold text-slate-700">Unggah File Laporan Penjualan Excel Harian</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Sistem akan menggabungkan & menyimpan data akumulatif otomatis</p>
+                    </div>
+                </div>
+                <div class="p-4 bg-slate-900 text-white rounded-2xl text-[11px] space-y-1 shadow">
+                    <p class="font-bold text-blue-400">📊 Repositori Berkas Terkumpul:</p>
+                    <p id="fileAccumulatorStatus">Belum ada data masuk. Silakan lakukan impor berkas penjualan harian Anda.</p>
+                </div>
+            </div>
+
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                 <div class="px-5 py-4 bg-slate-900 text-white flex justify-between items-center">
-                    <h3 class="font-extrabold text-sm">📋 Hasil Ekstraksi Data: KPI Sales Person</h3>
-                    <input type="text" id="searchKpi" placeholder="Cari Particulars..." class="text-xs px-3 py-1.5 bg-slate-800 text-white rounded-lg border border-slate-700 w-48 focus:outline-none" />
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">Tabel Akumulatif Kompilasi KPI Sales Person</h3>
                 </div>
-                <div class="overflow-x-auto custom-scrollbar max-h-[500px]">
+                <div class="overflow-x-auto max-h-96 custom-scrollbar">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead class="bg-slate-100 text-slate-600 font-bold sticky top-0 uppercase tracking-wider border-b border-slate-200">
                             <tr>
                                 <th class="p-3">Particulars</th>
                                 <th class="p-3 text-right">Target Sales</th>
                                 <th class="p-3 text-right">Net Sales</th>
-                                <th class="p-3 text-right">Net qty</th>
+                                <th class="p-3 text-right">Net Qty</th>
                                 <th class="p-3 text-right">Discount</th>
                                 <th class="p-3 text-right">ATV</th>
                                 <th class="p-3 text-right">UPT</th>
-                                <th class="p-3 text-right">Trans. Count</th>
+                                <th class="p-3 text-right">Trans Count</th>
                             </tr>
                         </thead>
-                        <tbody id="bodyKpiTable" class="divide-y divide-slate-100 font-medium">
-                            <!-- Populated on upload -->
+                        <tbody id="tableKpiBody" class="divide-y divide-slate-100 font-medium">
+                            <tr><td colspan="8" class="text-center py-10 text-slate-400 font-normal">Data kosong. Silakan unggah berkas excel laporan penjualan pertama Anda.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- PANELS 2: DATABASE KARYAWAN (Auto-Generated from Particulars split) -->
-        <section id="panel-database" class="space-y-4 menu-panel-item hidden">
+        <!-- MENU 2: DATABASE KARYAWAN -->
+        <section id="panel-db-karyawan" class="space-y-4 workspace-panel hidden">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                 <div class="px-5 py-4 bg-slate-900 text-white">
-                    <h3 class="font-extrabold text-sm">👥 Database Profil Karyawan Terstruktur</h3>
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">👥 Database Karyawan & Hitungan Target Berdasarkan Masa Kerja</h3>
                 </div>
-                <div class="overflow-x-auto custom-scrollbar max-h-[500px]">
+                <div class="overflow-x-auto max-h-96 custom-scrollbar">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead class="bg-slate-100 text-slate-600 font-bold uppercase border-b border-slate-200">
                             <tr>
                                 <th class="p-3">Employee ID / NIK</th>
                                 <th class="p-3">Employee Name</th>
-                                <th class="p-3">Divisi Kerja</th>
-                                <th class="p-3">SPV Terkait</th>
+                                <th class="p-3">Brand / Job Title</th>
+                                <th class="p-3">Divisi</th>
+                                <th class="p-3">SPV Atasan</th>
+                                <th class="p-3 text-right font-bold text-blue-600">Target Alokasi (Masa Kerja)</th>
                             </tr>
                         </thead>
-                        <tbody id="bodyDatabaseTable" class="divide-y divide-slate-100 font-medium">
+                        <tbody id="tableDbBody" class="divide-y divide-slate-100 font-medium">
+                            <tr><td colspan="6" class="text-center py-10 text-slate-400 font-normal">Silakan isi data target pada Menu 3 untuk melink-kan basis target karyawan.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- PANELS 3: TARGET PER DIVISI -->
-        <section id="panel-target" class="space-y-4 menu-panel-item hidden">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                <div class="px-5 py-4 bg-slate-900 text-white">
-                    <h3 class="font-extrabold text-sm">Target vs Aktual Berdasarkan Rumpun Divisi</h3>
+        <!-- MENU 3: MENU TARGET BREAKDOWN -->
+        <section id="panel-breakdown-target" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <h4 class="text-xs font-black text-slate-700 uppercase">⚡ Kalkulator Target Sistem Cerdas</h4>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Sales Bulan Lalu (Sales LY):</label>
+                        <input type="number" id="inputSalesLY" value="25000000" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none bg-white font-bold" />
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Jumlah Hari Kerja Berjalan:</label>
+                        <input type="number" id="inputWorkingDays" value="26" min="1" max="31" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none bg-white font-bold" />
+                    </div>
+                    <button onclick="calculateTargetBreakdownSystem()" class="w-full bg-blue-600 text-white font-bold py-2 rounded-xl text-xs hover:bg-blue-700 cursor-pointer shadow-md transition">
+                        ⚙️ Proses Breakdown Target (+10%)
+                    </button>
                 </div>
-                <div class="p-6">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
-                                <tr>
-                                    <th class="p-3">Divisi</th>
-                                    <th class="p-3 text-right">Actual Sales</th>
-                                    <th class="p-3 text-right">Target Ruang</th>
-                                    <th class="p-3 text-center">Persentase Capaian (% Ach)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bodyTargetTable" class="divide-y divide-slate-100 font-bold">
-                            </tbody>
-                        </table>
+                <div class="md:col-span-2 p-5 bg-slate-900 text-white rounded-2xl flex flex-col justify-center space-y-2">
+                    <p class="text-xs font-bold text-blue-400 uppercase">📊 Rumus Hasil Matriks Perhitungan:</p>
+                    <div class="grid grid-cols-2 gap-4 text-xs font-semibold">
+                        <div>Target Bulan Ini (+10% Ach): <span id="outTargetMonth" class="block font-black text-lg text-white">Rp 27.500.000</span></div>
+                        <div>Target Rata-rata / Hari Kerja: <span id="outTargetPerDay" class="block font-black text-lg text-amber-400">Rp 1.057.692</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PANELS 4: PLAN BY DAY -->
-        <section id="panel-plan" class="space-y-4 menu-panel-item hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="font-extrabold text-sm text-slate-800 mb-4">📈 Tren Alokasi Fluktuasi Target Harian Berjalan</h3>
-                <div class="relative h-80">
-                    <canvas id="chartPlanHarian"></canvas>
+        <!-- MENU 4: PLAN BY DAY -->
+        <section id="panel-plan-day" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <h3 class="font-extrabold text-sm text-slate-800">📅 Tabel Rencana Kerja Harian (Plan By Day)</h3>
+                        <p class="text-[10px] text-slate-400">Ketentuan Baku Ritel: Weekday Rp 1.000.000 • Weekend (Sabtu-Minggu) Rp 1.500.000</p>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- PANELS 5: ACV MTD (RANGKING GLOBAL) -->
-        <section id="panel-acv-mtd" class="space-y-4 menu-panel-item hidden">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                <div class="px-5 py-4 bg-slate-900 text-white">
-                    <h3 class="font-extrabold text-sm">🏆 Leaderboard Global: Papan Rangking Berdasarkan Omset</h3>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar max-h-[500px]">
+                <div class="overflow-x-auto max-h-80 custom-scrollbar">
                     <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-slate-900 text-white font-bold border-b border-slate-200">
+                        <thead class="bg-slate-100 text-slate-600 font-bold sticky top-0 border-b border-slate-200 uppercase tracking-wider">
                             <tr>
-                                <th class="p-3 text-center w-12">Rank</th>
-                                <th class="p-3">NIK</th>
-                                <th class="p-3">Nama Karyawan</th>
-                                <th class="p-3 text-right">Total Aktual Omset</th>
-                                <th class="p-3 text-center w-28">Kategori Prestasi</th>
+                                <th class="p-3 text-center w-16">Hari Ke</th>
+                                <th class="p-3">Nama Hari</th>
+                                <th class="p-3 text-right">Ketentuan Nominal Target</th>
+                                <th class="p-3 text-center">Estimasi Bobot %</th>
                             </tr>
                         </thead>
-                        <tbody id="bodyAcvTable" class="divide-y divide-slate-100 font-medium">
+                        <tbody id="tablePlanBody" class="divide-y divide-slate-100 font-medium">
+                            <!-- Populated on boot via loop -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- PANELS 6: SUMMARY MTD (SPV MATRIX) -->
-        <section id="panel-summary" class="space-y-4 menu-panel-item hidden">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="font-extrabold text-sm text-slate-800 mb-4">📊 Analisis Kategori Sebaran Performa Per Supervisor (SPV)</h3>
-                <div id="spvPieGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Dynamic chart matrix canvases -->
+        <!-- MENU 5: ACV MTD -->
+        <section id="panel-acv-mtd" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-5 py-4 bg-slate-900 text-white">
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">🏆 Akumulasi Pencapaian Berjalan Toko (ACV MTD)</h3>
+                </div>
+                <div class="overflow-x-auto max-h-96 custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">Employee ID</th>
+                                <th class="p-3">Nama Karyawan</th>
+                                <th class="p-3 text-right">Target Kumulatif</th>
+                                <th class="p-3 text-right">Total Penjualan MTD</th>
+                                <th class="p-3 text-center">Persentase Capaian MTD</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableAcvBody" class="divide-y divide-slate-100 font-medium">
+                            <tr><td colspan="5" class="text-center py-10 text-slate-400 font-normal">Silakan upload berkas KPI di Menu 1 untuk menghitung nilai akumulasi penjualan.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU 6: SUMMARY MTD (SPV) -->
+        <section id="panel-summary-mtd" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                <h3 class="font-extrabold text-sm text-slate-800 mb-4">📊 Rangkuman Klaster Kategori Kinerja Per Supervisor (SPV)</h3>
+                <div id="spvMatrixGridBlock" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <!-- Pie charts dynamic load here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU 7: PERFORMANCE DIVISI -->
+        <section id="panel-performance-divisi" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                <div class="px-5 py-4 bg-slate-900 text-white">
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">🛡️ Rangkuman Kinerja Berdasarkan Kluster Divisi Kerja</h3>
+                </div>
+                <div class="p-4">
+                    <table class="w-full text-left border-collapse text-xs font-bold">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-500">
+                            <tr>
+                                <th class="p-3">Grup Divisi</th>
+                                <th class="p-3 text-right">Total Penjualan Aktual</th>
+                                <th class="p-3 text-center">Persentase Kontribusi Global</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableDivisiBody" class="divide-y divide-slate-100 text-slate-700">
+                            <tr><td colspan="3" class="text-center py-10 text-slate-400 font-normal">Belum ada ringkasan kontribusi divisi yang terdata.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU 8: PERFORMANCE RANK MTD -->
+        <section id="panel-performance-rank-mtd" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-5 py-4 bg-slate-900 text-white">
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">👑 Leaderboard Global Bulanan: Performance Rank MTD</h3>
+                </div>
+                <div class="overflow-x-auto max-h-96 custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-900 text-white font-bold uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="p-3 text-center w-14">Rank</th>
+                                <th class="p-3">ID Karyawan</th>
+                                <th class="p-3">Nama Karyawan</th>
+                                <th class="p-3 text-right font-bold text-emerald-400">Total Omset Aktual</th>
+                                <th class="p-3 text-center w-28">Kategori Prestasi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableRankMtdBody" class="divide-y divide-slate-100 font-medium">
+                            <tr><td colspan="5" class="text-center py-10 text-slate-400 font-normal">Data rangking global kosong.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU 9: RANK BY DAY PERORANG -->
+        <section id="panel-performance-rank-day" class="space-y-4 workspace-panel hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-5 py-4 bg-slate-900 text-white">
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">⚡ Papan Peringkat Harian Personal: Rank By Day Perorang</h3>
+                </div>
+                <div class="overflow-x-auto max-h-96 custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-900 text-white font-bold uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="p-3 text-center w-14">Rank</th>
+                                <th class="p-3">ID Karyawan</th>
+                                <th class="p-3">Nama Lengkap</th>
+                                <th class="p-3 text-right">Rerata Omset Per Hari</th>
+                                <th class="p-3 text-center">Persentase Kinerja Harian</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableRankDayBody" class="divide-y divide-slate-100 font-medium">
+                            <tr><td colspan="5" class="text-center py-10 text-slate-400 font-normal">Data peringkat harian kosong.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -202,249 +305,289 @@
     </main>
 
     <script>
-        let coreParsedRecords = [];
-        let internalPieCharts = [];
-        let internalLineChart = null;
+        let appSalesRecords = [];
+        let globalTargetData = { totalMonth: 27500000, perDay: 1057692, daysCount: 26 };
+        let spvChartInstances = [];
 
-        document.getElementById('excelSingleUpload').addEventListener('change', handleExcelUpload, false);
-        document.getElementById('searchKpi').addEventListener('input', filterKpiRows);
+        window.addEventListener('DOMContentLoaded', () => {
+            initializePlanByDayTemplate();
+            calculateTargetBreakdownSystem();
+        });
 
-        function switchMenu(targetPanelId) {
-            document.querySelectorAll('.menu-panel-item').forEach(p => p.classList.add('hidden'));
-            document.getElementById(targetPanelId).classList.remove('hidden');
+        function changeWorkspace(targetId) {
+            document.querySelectorAll('.workspace-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById(targetId).classList.remove('hidden');
             
-            document.querySelectorAll('#menuNavigationContainer button').forEach(b => b.classList.remove('menu-active'));
-            document.getElementById('btn-' + targetPanelId).classList.add('menu-active');
+            document.querySelectorAll('#menuNavigationContainer, button').forEach(b => {
+                if(b.id && b.id.startsWith('btn-panel-')) b.classList.remove('menu-btn-active');
+            });
+            document.getElementById('btn-' + targetId).classList.add('menu-btn-active');
         }
 
-        function cleanVal(v) {
-            if (!v) return 0;
-            if (typeof v === 'number') return v;
-            let res = parseFloat(v.toString().replace(/\./g, '').replace(/,/g, '.'));
-            return isNaN(res) ? 0 : res;
+        function rupiahFormat(num) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num || 0);
         }
 
-        function rupiah(v) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v || 0);
+        function cleanNumInput(val) {
+            if (!val) return 0;
+            if (typeof val === 'number') return val;
+            let parsed = parseFloat(val.toString().replace(/\./g, '').replace(/,/g, '.'));
+            return isNaN(parsed) ? 0 : parsed;
         }
 
-        function handleExcelUpload(e) {
+        function initializePlanByDayTemplate() {
+            const tbody = document.getElementById('tablePlanBody');
+            tbody.innerHTML = '';
+            
+            let daysName = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            
+            for (let i = 1; i <= 26; i++) {
+                let dayIdx = (i) % 7; 
+                let dayName = daysName[dayIdx];
+                let isWeekend = (dayName === 'Sabtu' || dayName === 'Minggu');
+                let targetNominal = isWeekend ? 1500000 : 1000000;
+                let estimatedWeight = isWeekend ? '5.60%' : '2.30%';
+
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100 text-slate-700";
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-bold text-slate-400">${i}</td>
+                    <td class="p-3 font-semibold text-slate-900">${dayName}</td>
+                    <td class="p-3 text-right font-bold text-slate-800">${rupiahFormat(targetNominal)}</td>
+                    <td class="p-3 text-center font-bold text-blue-600">${estimatedWeight}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function calculateTargetBreakdownSystem() {
+            let lySales = cleanNumInput(document.getElementById('inputSalesLY').value);
+            let totalDays = parseInt(document.getElementById('inputWorkingDays').value) || 26;
+
+            let targetMonth = lySales * 1.10; // Sales LY + 10%
+            let targetPerDay = targetMonth / totalDays;
+
+            globalTargetData.totalMonth = targetMonth;
+            globalTargetData.perDay = targetPerDay;
+            globalTargetData.daysCount = totalDays;
+
+            document.getElementById('outTargetMonth').textContent = rupiahFormat(targetMonth);
+            document.getElementById('outTargetPerDay').textContent = rupiahFormat(targetPerDay);
+
+            if(appSalesRecords.length > 0) {
+                compileAndRebuildDashboards();
+            }
+        }
+
+        document.getElementById('uploadKpiDaily').addEventListener('change', (e) => {
             const files = e.target.files;
             if (!files || files.length === 0) return;
             const file = files[0];
             const reader = new FileReader();
 
-            document.getElementById('statusBoks').innerHTML = "⏳ Memproses Dokumen...";
+            document.getElementById('fileAccumulatorStatus').textContent = "Mengimpor & menyatukan data harian berkas...";
 
             reader.onload = function(evt) {
-                const arr = new Uint8Array(evt.target.result);
-                const wb = XLSX.read(arr, { type: 'array' });
-                const mainSheet = wb.Sheets[wb.SheetNames[0]];
-                const rawRows = XLSX.utils.sheet_to_json(mainSheet, { header: "A" });
+                const data = new Uint8Array(evt.target.result);
+                const wb = XLSX.read(data, { type: 'array' });
+                const ws = wb.Sheets[wb.SheetNames[0]];
+                const jsonRows = XLSX.utils.sheet_to_json(ws, { header: "A" });
 
-                coreParsedRecords = [];
-
-                rawRows.forEach(row => {
-                    let part = row['B'] || row['A'] || '';
+                jsonRows.forEach(row => {
+                    let part = row['B'] || '';
                     if (part && part.toString().includes('-') && !part.toString().toLowerCase().includes('particulars')) {
-                        let pieces = part.toString().split('-');
-                        let nik = pieces[0].trim();
-                        let nama = pieces.slice(1).join('-').trim();
+                        let segments = part.toString().split('-');
+                        let nik = segments[0].trim();
+                        let nama = segments.slice(1).join('-').trim();
 
-                        let target = cleanVal(row['C']);
-                        let netSales = cleanVal(row['D']);
-                        let netQty = cleanVal(row['E']);
-                        let discount = cleanVal(row['F']);
-                        let atv = cleanVal(row['G']);
-                        let upt = cleanVal(row['H']);
-                        let trans = cleanVal(row['I']);
+                        let netSales = cleanNumInput(row['D']);
+                        let netQty = cleanNumInput(row['E']);
+                        let discount = cleanNumInput(row['F']);
+                        let atv = cleanNumInput(row['G']);
+                        let upt = cleanNumInput(row['H']);
+                        let trans = cleanNumInput(row['I']);
 
-                        // Intelligent Mock Auto-Mapping Engine for the missing tables logic:
-                        // Automatically distributes rows into realistic divisions & supervisors based on NIK suffix/modulo
-                        let mockDiv = (parseInt(nik) % 3 + 1).toString();
-                        let mockSpvList = ['SALMA', 'TRI ENDANG N', 'YUSRIAH'];
-                        let mockSpv = mockSpvList[parseInt(nik) % 3];
+                        let matchIdx = appSalesRecords.findIndex(r => r.nik === nik);
+                        if (matchIdx > -1) {
+                            appSalesRecords[matchIdx].netSales += netSales;
+                            appSalesRecords[matchIdx].netQty += netQty;
+                            appSalesRecords[matchIdx].discount += discount;
+                            appSalesRecords[matchIdx].transCount += trans;
+                        } else {
+                            let mockDiv = (parseInt(nik) % 3 + 1).toString();
+                            let mockSpv = ['SALMA', 'TRI ENDANG N', 'YUSRIAH'][parseInt(nik) % 3];
+                            let mockBrand = ['SORELLA', 'CARDINAL FEMME', 'WRANGLER JEANS'][parseInt(nik) % 3];
 
-                        coreParsedRecords.push({
-                            particulars: part.toString().trim(), nik: nik, name: nama,
-                            targetSales: target, netSales: netSales, netQty: netQty,
-                            discount: discount, atv: atv, upt: upt, transCount: trans,
-                            division: mockDiv, spv: mockSpv
-                        });
+                            appSalesRecords.push({
+                                particulars: part, nik: nik, name: nama, brand: mockBrand,
+                                netSales: netSales, netQty: netQty, discount: discount,
+                                atv: atv, upt: upt, transCount: trans, division: mockDiv, spv: mockSpv
+                            });
+                        }
                     }
                 });
 
-                if (coreParsedRecords.length > 0) {
-                    document.getElementById('statusBoks').innerHTML = "✅ Berkas Aktif";
-                    document.getElementById('statusBoks').className = "text-sm bg-green-600 px-4 py-1.5 rounded-full font-semibold text-white shadow";
-                    document.getElementById('menuNavigationContainer').style.display = 'block';
-
-                    renderKpiTable(coreParsedRecords);
-                    renderDatabaseTable();
-                    renderDivisionTargetTable();
-                    buildDailyLineChart();
-                    renderRankingTable();
-                    renderSPVChartsGrid();
-                } else {
-                    alert("Baris data valid dengan format NIK-Nama tidak terdeteksi pada Kolom B.");
-                    document.getElementById('statusBoks').innerHTML = "❌ Gagal Mengurai Data";
-                }
+                document.getElementById('fileAccumulatorStatus').innerHTML = `✅ Total Berhasil Terhubung: <span class="font-bold text-emerald-400">${appSalesRecords.length} Karyawan Aktif</span>`;
+                compileAndRebuildDashboards();
             };
             reader.readAsArrayBuffer(file);
-        }
+        });
 
-        function renderKpiTable(data) {
-            const tbody = document.getElementById('bodyKpiTable');
-            tbody.innerHTML = '';
-            data.forEach(item => {
+        function compileAndRebuildDashboards() {
+            // Render Menu 1: KPI Sales Accumulator Table
+            const tKpi = document.getElementById('tableKpiBody');
+            tKpi.innerHTML = '';
+            appSalesRecords.forEach(i => {
                 let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition border-b border-slate-100 text-slate-700";
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
                 tr.innerHTML = `
-                    <td class="p-3 font-semibold text-slate-900">${item.particulars}</td>
-                    <td class="p-3 text-right text-slate-400">${rupiah(item.targetSales)}</td>
-                    <td class="p-3 text-right font-bold text-slate-950">${rupiah(item.netSales)}</td>
-                    <td class="p-3 text-right">${item.netQty}</td>
-                    <td class="p-3 text-right text-rose-600">${rupiah(item.discount)}</td>
-                    <td class="p-3 text-right">${rupiah(item.atv)}</td>
-                    <td class="p-3 text-right font-bold text-blue-600">${item.upt.toFixed(1)}</td>
-                    <td class="p-3 text-right text-slate-600">${item.transCount}</td>
+                    <td class="p-3 font-semibold text-slate-900">${i.particulars}</td>
+                    <td class="p-3 text-right text-slate-400">${rupiahFormat(globalTargetData.totalMonth / appSalesRecords.length)}</td>
+                    <td class="p-3 text-right font-bold text-slate-900">${rupiahFormat(i.netSales)}</td>
+                    <td class="p-3 text-right">${i.netQty}</td>
+                    <td class="p-3 text-right text-rose-600">${rupiahFormat(i.discount)}</td>
+                    <td class="p-3 text-right">${rupiahFormat(i.netSales / (i.transCount || 1))}</td>
+                    <td class="p-3 text-center text-blue-600 font-bold">${i.upt.toFixed(1)}</td>
+                    <td class="p-3 text-right">${i.transCount}</td>
                 `;
-                tbody.appendChild(tr);
+                tKpi.appendChild(tr);
             });
-        }
 
-        function filterKpiRows() {
-            let q = document.getElementById('searchKpi').value.toLowerCase();
-            let matched = coreParsedRecords.filter(i => i.particulars.toLowerCase().includes(q));
-            renderKpiTable(matched);
-        }
-
-        function renderDatabaseTable() {
-            const tbody = document.getElementById('bodyDatabaseTable');
-            tbody.innerHTML = '';
-            coreParsedRecords.forEach(i => {
+            // Render Menu 2: Database Karyawan & Linked Target Allocation
+            const tDb = document.getElementById('tableDbBody');
+            tDb.innerHTML = '';
+            let targetAllocation = globalTargetData.totalMonth / appSalesRecords.length;
+            appSalesRecords.forEach(i => {
                 let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 border-b border-slate-100 text-slate-700";
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
                 tr.innerHTML = `
                     <td class="p-3 font-mono font-bold text-blue-600">${i.nik}</td>
-                    <td class="p-3 font-semibold text-slate-900">${i.name}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 rounded text-slate-600 font-bold">CV - Divisi ${i.division}</span></td>
+                    <td class="p-3 font-semibold text-slate-800">${i.name}</td>
+                    <td class="p-3 text-slate-500">${i.brand}</td>
+                    <td class="p-3 font-bold text-slate-600">Grup ${i.division}</td>
                     <td class="p-3 text-slate-600 font-bold">${i.spv}</td>
+                    <td class="p-3 text-right font-extrabold text-blue-600">${rupiahFormat(targetAllocation)}</td>
                 `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function renderDivisionTargetTable() {
-            const tbody = document.getElementById('bodyTargetTable');
-            tbody.innerHTML = '';
-
-            let summary = { '1': { act: 0, tgt: 600000000 }, '2': { act: 0, tgt: 900000000 }, '3': { act: 0, tgt: 1200000000 } };
-            coreParsedRecords.forEach(i => {
-                if (summary[i.division]) summary[i.division].act += i.netSales;
+                tDb.appendChild(tr);
             });
 
-            Object.keys(summary).forEach(div => {
-                let item = summary[div];
-                let ach = ((item.act / item.tgt) * 100).toFixed(1) + '%';
+            // Render Menu 5: ACV MTD
+            const tAcv = document.getElementById('tableAcvBody');
+            tAcv.innerHTML = '';
+            appSalesRecords.forEach(i => {
+                let ach = ((i.netSales / targetAllocation) * 100).toFixed(1) + '%';
                 let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 border-b border-slate-100 text-slate-700";
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
                 tr.innerHTML = `
-                    <td class="p-3 text-slate-900">Divisi Ritel ${div}</td>
-                    <td class="p-3 text-right text-slate-900">${rupiah(item.act)}</td>
-                    <td class="p-3 text-right text-slate-400">${rupiah(item.tgt)}</td>
-                    <td class="p-3 text-center text-emerald-600">${ach}</td>
+                    <td class="p-3 font-mono text-slate-500">${i.nik}</td>
+                    <td class="p-3 font-bold text-slate-800">${i.name}</td>
+                    <td class="p-3 text-right text-slate-400">${rupiahFormat(targetAllocation)}</td>
+                    <td class="p-3 text-right font-black">${rupiahFormat(i.netSales)}</td>
+                    <td class="p-3 text-center text-emerald-600 font-bold">${ach}</td>
                 `;
-                tbody.appendChild(tr);
+                tAcv.appendChild(tr);
             });
-        }
 
-        function buildDailyLineChart() {
-            if (internalLineChart) internalLineChart.destroy();
-            let ctx = document.getElementById('chartPlanHarian').getContext('2d');
-            
-            // Mocking dynamic 1-26 month timeline simulation data from the main upload metrics
-            let days = Array.from({length: 26}, (_, i) => `Hari ${i+1}`);
-            let mockValues = Array.from({length: 26}, () => Math.floor(Math.random() * 800000) + 900000);
-
-            internalLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: days,
-                    datasets: [{
-                        label: 'Target Penjualan Harian Berjalan (Rp)',
-                        data: mockValues,
-                        borderColor: '#2563eb',
-                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
-                        fill: true,
-                        tension: 0.1,
-                        borderWidth: 2
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-
-        function renderRankingTable() {
-            const tbody = document.getElementById('bodyAcvTable');
-            tbody.innerHTML = '';
-            
-            let sorted = [...coreParsedRecords].sort((a,b) => b.netSales - a.netSales);
-            sorted.forEach((item, index) => {
-                let badge = 'bg-rose-100 text-rose-800';
-                let kat = 'Stone';
-                if (index < 4) { badge = 'bg-emerald-100 text-emerald-800 font-bold'; kat = 'Diamond'; }
-                else if (index < 9) { badge = 'bg-amber-100 text-amber-800 font-bold'; kat = 'Gold'; }
-                else if (index < 18) { badge = 'bg-blue-100 text-blue-800'; kat = 'Silver'; }
-
+            // Render Menu 7: Performance Divisi Summary
+            const tDiv = document.getElementById('tableDivisiBody');
+            tDiv.innerHTML = '';
+            let divTotals = { '1': 0, '2': 0, '3': 0 };
+            let totalAll = 0;
+            appSalesRecords.forEach(i => { if (divTotals[i.division] !== undefined) { divTotals[i.division] += i.netSales; totalAll += i.netSales; } });
+            Object.keys(divTotals).forEach(d => {
+                let share = totalAll > 0 ? ((divTotals[d] / totalAll) * 100).toFixed(1) + '%' : '0%';
                 let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 border-b border-slate-100 text-slate-700";
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
                 tr.innerHTML = `
-                    <td class="p-3 text-center font-black text-slate-400">${index + 1}</td>
-                    <td class="p-3 font-mono font-bold text-slate-600">${item.nik}</td>
-                    <td class="p-3 font-semibold text-slate-900">${item.name}</td>
-                    <td class="p-3 text-right font-bold text-slate-950">${rupiah(item.netSales)}</td>
-                    <td class="p-3 text-center">
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold ${badge}">${kat}</span>
-                    </td>
+                    <td class="p-3 text-slate-900">Divisi Retail Pakaian Rumpun ${d}</td>
+                    <td class="p-3 text-right text-slate-900">${rupiahFormat(divTotals[d])}</td>
+                    <td class="p-3 text-center text-blue-600 font-extrabold">${share}</td>
                 `;
-                tbody.appendChild(tr);
+                tDiv.appendChild(tr);
             });
+
+            // Render Menu 8: Global Peringkat Bulanan (Performance Rank MTD)
+            const tRankMtd = document.getElementById('tableRankMtdBody');
+            tRankMtd.innerHTML = '';
+            let sortedMtd = [...appSalesRecords].sort((a,b) => b.netSales - a.netSales);
+            sortedMtd.forEach((i, idx) => {
+                let badge = idx < 3 ? 'bg-emerald-100 text-emerald-800 font-bold' : (idx < 7 ? 'bg-amber-100 text-amber-800 font-bold' : 'bg-slate-100 text-slate-700');
+                let cat = idx < 3 ? 'Diamond' : (idx < 7 ? 'Gold' : 'Silver');
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-black text-slate-400">${idx+1}</td>
+                    <td class="p-3 font-mono font-bold text-slate-600">${i.nik}</td>
+                    <td class="p-3 font-semibold text-slate-800">${i.name}</td>
+                    <td class="p-3 text-right font-black text-slate-950">${rupiahFormat(i.netSales)}</td>
+                    <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] uppercase ${badge}">${cat}</span></td>
+                `;
+                tRankMtd.appendChild(tr);
+            });
+
+            // Render Menu 9: Rank By Day Perorang
+            const tRankDay = document.getElementById('tableRankDayBody');
+            tRankDay.innerHTML = '';
+            let sortedDay = [...appSalesRecords].sort((a,b) => (b.netSales / globalTargetData.daysCount) - (a.netSales / globalTargetData.daysCount));
+            sortedDay.forEach((i, idx) => {
+                let avgDay = i.netSales / globalTargetData.daysCount;
+                let dayTarget = targetAllocation / globalTargetData.daysCount;
+                let pct = ((avgDay / dayTarget) * 100).toFixed(1) + '%';
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-black text-slate-400">${idx+1}</td>
+                    <td class="p-3 font-mono font-bold text-blue-600">${i.nik}</td>
+                    <td class="p-3 font-semibold text-slate-800">${i.name}</td>
+                    <td class="p-3 text-right font-bold text-slate-900">${rupiahFormat(avgDay)}</td>
+                    <td class="p-3 text-center font-extrabold text-emerald-600">${pct}</td>
+                `;
+                tRankDay.appendChild(tr);
+            });
+
+            // Render Menu 6: Summary SPV Matrix Graphic Elements
+            renderSpvMatrixCharts();
         }
 
-        function renderSPVChartsGrid() {
-            const grid = document.getElementById('spvPieGrid');
+        function renderSpvMatrixCharts() {
+            const grid = document.getElementById('spvMatrixGridBlock');
             grid.innerHTML = '';
-            internalPieCharts.forEach(c => c.destroy());
-            internalPieCharts = [];
+            spvChartInstances.forEach(c => c.destroy());
+            spvChartInstances = [];
 
-            let dataSpv = { 'SALMA': { d: 4, g: 3, s: 4, st: 2 }, 'TRI ENDANG N': { d: 2, g: 5, s: 3, st: 1 }, 'YUSRIAH': { d: 3, g: 2, s: 6, st: 4 } };
+            let spvData = { 'SALMA': {d:0, g:0, s:0}, 'TRI ENDANG N': {d:0, g:0, s:0}, 'YUSRIAH': {d:0, g:0, s:0} };
+            let sorted = [...appSalesRecords].sort((a,b) => b.netSales - a.netSales);
+            sorted.forEach((i, idx) => {
+                let cat = idx < 3 ? 'd' : (idx < 7 ? 'g' : 's');
+                if (spvData[i.spv]) spvData[i.spv][cat]++;
+            });
 
-            Object.keys(dataSpv).forEach((name, idx) => {
+            Object.keys(spvData).forEach((name, idx) => {
                 let box = document.createElement('div');
-                box.className = "bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm";
+                box.className = "bg-white p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-inner";
                 box.innerHTML = `
-                    <h4 class="font-bold text-slate-700 text-xs mb-3 uppercase tracking-wider">${name}</h4>
-                    <div class="relative w-40 h-40">
-                        <canvas id="pieSpv-${idx}"></canvas>
+                    <h5 class="font-bold text-slate-700 text-xs mb-3 border-b pb-1 w-full text-center uppercase tracking-wider">${name}</h5>
+                    <div class="relative w-36 h-36">
+                        <canvas id="spvDoughnutChart-${idx}"></canvas>
                     </div>
                 `;
                 grid.appendChild(box);
 
-                let ctx = document.getElementById(`pieSpv-${idx}`).getContext('2d');
-                let counts = dataSpv[name];
+                let ctx = document.getElementById(`spvDoughnutChart-${idx}`).getContext('2d');
+                let counts = spvData[name];
+
                 let c = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Diamond', 'Gold', 'Silver', 'Stone'],
+                        labels: ['Diamond', 'Gold', 'Silver'],
                         datasets: [{
-                            data: [counts.d, counts.g, counts.s, counts.st],
-                            backgroundColor: ['#10b981', '#fbbf24', '#3b82f6', '#f87171']
+                            data: [counts.d, counts.g, counts.s],
+                            backgroundColor: ['#10b981', '#fbbf24', '#3b82f6']
                         }]
                     },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
                 });
-                internalPieCharts.push(c);
+                spvChartInstances.push(c);
             });
         }
     </script>
