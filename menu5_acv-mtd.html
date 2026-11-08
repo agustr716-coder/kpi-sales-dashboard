@@ -1,44 +1,73 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <title>5. ACV MTD</title>
+    <title>5. ACV MTD Leaderboard</title>
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
-    
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center gap-4">
-            <span class="text-3xl">🏛️</span>
-            <div>
-                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Multi-Page Dedicated Subsystem</p>
-            </div>
-        </div>
-        <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 border border-slate-700 px-4 py-2 rounded-xl transition shadow flex items-center gap-1.5">
-            🏠 Home Dashboard
-        </a>
+    <nav class="bg-slate-900 text-white p-5 flex justify-between items-center shadow-md">
+        <span class="font-black text-emerald-400">🏆 5. ACV MTD PERFORMANCE TRACKER</span>
+        <a href="index.html" class="bg-slate-800 text-amber-400 text-xs px-4 py-2 rounded-xl border border-slate-700 font-bold">🏠 Home Dashboard</a>
     </nav>
-
-    <main class="max-w-5xl mx-auto p-6 mt-6 space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                <span class="text-3xl">🏆</span>
-                <div>
-                    <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide">5. ACV MTD</h2>
-                    <p class="text-xs text-slate-400">Tabel komparasi komprehensif pencapaian bulanan sales person.</p>
-                </div>
+    <main class="max-w-6xl mx-auto p-6 mt-6 space-y-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="text-xs font-black uppercase text-slate-700 tracking-wider">🏆 Papan Capaian Akumulasi Omset Berjalan Karyawan</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-slate-800 text-white font-bold uppercase">
+                        <tr><th class="p-2.5">NIK</th><th class="p-2.5">Nama Sales</th><th class="p-2.5">Divisi</th><th class="p-2.5 text-right">Total Aktual MTD</th><th class="p-2.5 text-center">Rasio % Ach</th><th class="p-2.5 text-center">Kategori</th></tr>
+                    </thead>
+                    <tbody id="tbodyAcvMtd" class="divide-y divide-slate-100 font-semibold text-slate-700"></tbody>
+                </table>
             </div>
-            <div class="py-12 text-center text-slate-400 text-xs">Silakan hubungkan file data induk melalui modul upload untuk menampilkan infografis lembar kerja ini.</div>
         </div>
-        <div class="text-center">
-            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition bg-slate-200/50 hover:bg-slate-200 px-5 py-2.5 rounded-xl">&larr; Kembali ke Dashboard Utama</a>
-        </div>
+        <div class="text-center"><a href="index.html" class="text-xs text-slate-400 font-bold">&larr; Kembali ke Dashboard</a></div>
     </main>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            let dbEmp = JSON.parse(localStorage.getItem('MDS_EMPLOYEE_MASTER_DATABASE')) || [];
+            let dbKpi = JSON.parse(localStorage.getItem('MDS_KPI_HARIAN_STORAGE_DATABASE')) || {};
+            let tbody = document.getElementById('tbodyAcvMtd');
+            let fmt = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+
+            // Hitung akumulasi penjualan per NIK dari data laporan harian Menu 1
+            let salesMap = {};
+            Object.keys(dbKpi).forEach(date => {
+                dbKpi[date].forEach(row => {
+                    let parts = row.particulars.split('-');
+                    let nik = parts[0].trim();
+                    salesMap[nik] = (salesMap[nik] || 0) + (row.netSales || 0);
+                });
+            });
+
+            if(dbEmp.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center italic text-slate-400">Belum ada data database karyawan aktif di Menu 2.</td></tr>`;
+                return;
+            }
+
+            dbEmp.forEach(emp => {
+                let actualSales = salesMap[emp.id] || 0;
+                let dummyTarget = parseInt(emp.masa) * 1421833 || 25000000; // Simulasi porsi target berbasis rate hari kerja
+                let achPercent = dummyTarget > 0 ? (actualSales / dummyTarget) * 100 : 0;
+
+                let category = "Stone"; let badgeColor = "bg-rose-100 text-rose-800 border-rose-200";
+                if(achPercent >= 100) { category = "Diamond"; badgeColor = "bg-emerald-600 text-white border-emerald-700"; }
+                else if(achPercent >= 80) { category = "Gold"; badgeColor = "bg-amber-400 text-slate-900 border-amber-500"; }
+                else if(achPercent >= 50) { category = "Silver"; badgeColor = "bg-slate-200 text-slate-800 border-slate-300"; }
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-mono text-slate-500">${emp.id}</td>
+                    <td class="p-2.5 text-slate-900">${emp.name}</td>
+                    <td class="p-2.5 font-black text-blue-600">${emp.div}</td>
+                    <td class="p-2.5 text-right font-black">${fmt.format(actualSales)}</td>
+                    <td class="p-2.5 text-center font-mono font-bold">${achPercent.toFixed(1)}%</td>
+                    <td class="p-2.5 text-center"><span class="px-2.5 py-0.5 rounded-lg text-[10px] font-black border uppercase shadow-sm ${badgeColor}">${category}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
 </body>
 </html>
