@@ -3,361 +3,564 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPI & Sales Dashboard</title>
-    <!-- Tailwind CSS -->
+    <title>MDS 312 Lippo Plaza Jambi - Executive Sales Dashboard</title>
+    <!-- Tailwind CSS v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- SheetJS for Excel Parsing -->
+    <!-- SheetJS for comprehensive spreadsheet decoding -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <!-- Chart.js for visualization -->
+    <!-- Chart.js for premium vector rendering -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .tab-active { border-bottom-width: 4px; border-color: #2563eb; color: #2563eb; font-weight: bold; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased custom-scrollbar">
 
-    <!-- Top Navigation Bar -->
-    <nav class="bg-blue-600 text-white shadow-md px-6 py-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold tracking-wide">📊 KPI Sales Dashboard 2026</h1>
-        <div class="text-sm bg-blue-700 px-3 py-1 rounded" id="uploadStatus">Belum ada file diunggah</div>
+    <!-- Top Management Navbar -->
+    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="text-3xl">🦅</span>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-wide uppercase text-blue-400">Sales Analytics Cloud</h1>
+                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Dashboard Terintegrasi</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <div id="uploadStatus" class="text-xs font-bold uppercase px-4 py-2 bg-slate-800 rounded-full border border-slate-700 text-slate-400 shadow-inner flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> Standby Menunggu File Excel
+            </div>
+        </div>
     </nav>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto p-6 space-y-6">
+    <!-- Main Workspace Container -->
+    <main class="max-w-7xl mx-auto p-6 space-y-8">
 
-        <!-- Upload Panel Section -->
-        <section class="bg-white rounded-xl shadow p-6 border border-gray-100">
-            <h2 class="text-lg font-semibold mb-4 text-gray-700 flex items-center gap-2">
-                📂 Unggah File Excel Laporan (.xlsx)
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition cursor-pointer relative">
-                    <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                    <span class="text-4xl mb-2">📄</span>
-                    <p class="text-sm font-medium text-gray-600">Pilih atau seret file Excel ke sini</p>
-                    <p class="text-xs text-gray-400 mt-1">Mendukung sheet KPI Sales Person, Database, & Target</p>
+        <!-- Unified Core Control Panel (Input Data & Validation Template Check) -->
+        <section class="bg-white rounded-3xl shadow-sm p-6 border border-slate-100 grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+            <div class="lg:col-span-2">
+                <div class="border-3 border-dashed border-slate-200 hover:border-blue-500 rounded-2xl p-8 flex flex-col items-center justify-center bg-slate-50/50 hover:bg-blue-50/20 transition duration-300 cursor-pointer relative group">
+                    <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition duration-300">
+                        <span class="text-2xl text-blue-600">📊</span>
+                    </div>
+                    <p class="text-sm font-bold text-slate-700">Unggah Berkas Excel Multi-Sheet</p>
+                    <p class="text-xs text-slate-400 mt-1 text-center">Mendukung modul KPI Sales, Database, Target, Plan By Day, ACV MTD, & Perangkingan</p>
                 </div>
-                
-                <div class="bg-blue-50 p-4 rounded-lg flex flex-col justify-center text-xs text-blue-900 space-y-2">
-                    <p class="font-bold text-sm mb-1 text-blue-950">💡 Panduan Format Data:</p>
-                    <p>• <strong>KPI Sales Person:</strong> Kolom utama mencakup Particulars (NIK-Nama), Target Sales, Net Sales, Net qty, UPT, Trans. Count.</p>
-                    <p>• <strong>Database:</strong> Berisi detail NIK, Nama, Brand, Divisi, dan Nama SPV.</p>
-                    <p>• <strong>Target:</strong> Menyimpan data target harian untuk komparasi pencapaian.</p>
+            </div>
+            <!-- Structural Mapping Tracker -->
+            <div class="p-5 bg-slate-900 rounded-2xl text-white space-y-3 shadow-lg">
+                <h3 class="text-xs font-bold tracking-widest text-slate-400 uppercase border-b border-slate-800 pb-2">📂 Status Koneksi Sistem Lembar</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-[11px] font-medium text-slate-400" id="sheetMapTracker">
+                    <div id="mKPI" class="flex items-center gap-2">❌ KPI Sales Person</div>
+                    <div id="mDB" class="flex items-center gap-2">❌ Database</div>
+                    <div id="mTarget" class="flex items-center gap-2">❌ Target Divisi</div>
+                    <div id="mPlan" class="flex items-center gap-2">❌ Plan By Day</div>
+                    <div id="mACV" class="flex items-center gap-2">❌ ACV MTD</div>
+                    <div id="mSummary" class="flex items-center gap-2">❌ Summary MTD</div>
+                    <div id="mRankMTD" class="flex items-center gap-2">❌ Rank MTD</div>
+                    <div id="mRankDay" class="flex items-center gap-2">❌ Rank By Day</div>
                 </div>
             </div>
         </section>
 
-        <!-- Summary Widgets (Hidden Initially) -->
-        <section id="summaryWidgets" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 hidden">
-            <div class="bg-white p-5 rounded-xl shadow border-l-4 border-blue-500">
-                <p class="text-xs text-gray-500 font-bold uppercase">Total Net Sales</p>
-                <p class="text-2xl font-extrabold text-gray-800 mt-1" id="widgetNetSales">Rp 0</p>
-            </div>
-            <div class="bg-white p-5 rounded-xl shadow border-l-4 border-green-500">
-                <p class="text-xs text-gray-500 font-bold uppercase">Total Qty Terjual</p>
-                <p class="text-2xl font-extrabold text-gray-800 mt-1" id="widgetQty">0 pcs</p>
-            </div>
-            <div class="bg-white p-5 rounded-xl shadow border-l-4 border-purple-500">
-                <p class="text-xs text-gray-500 font-bold uppercase">Rata-rata UPT</p>
-                <p class="text-2xl font-extrabold text-gray-800 mt-1" id="widgetUPT">0.0</p>
-            </div>
-            <div class="bg-white p-5 rounded-xl shadow border-l-4 border-orange-500">
-                <p class="text-xs text-gray-500 font-bold uppercase">Total Transaksi</p>
-                <p class="text-2xl font-extrabold text-gray-800 mt-1" id="widgetTrans">0</p>
-            </div>
-        </section>
+        <!-- Dynamic Navigation Hub (Revealed post successful compilation) -->
+        <div class="border-b border-slate-200" id="dashboardTabsMenu" style="display:none;">
+            <nav class="flex flex-wrap gap-4 md:gap-8 text-sm font-semibold text-slate-500">
+                <button onclick="changeActiveTab('view-rank-day')" id="btn-view-rank-day" class="py-3 px-1 border-b-2 border-transparent hover:text-blue-600 transition cursor-pointer tab-active">
+                    ⚡ Rank By Day
+                </button>
+                <button onclick="changeActiveTab('view-rank-mtd')" id="btn-view-rank-mtd" class="py-3 px-1 border-b-2 border-transparent hover:text-blue-600 transition cursor-pointer">
+                    🏆 Rank MTD (Global)
+                </button>
+                <button onclick="changeActiveTab('view-rank-divisi')" id="btn-view-rank-divisi" class="py-3 px-1 border-b-2 border-transparent hover:text-blue-600 transition cursor-pointer">
+                    🛡️ Per Divisi
+                </button>
+                <button onclick="changeActiveTab('view-summary-mtd')" id="btn-view-summary-mtd" class="py-3 px-1 border-b-2 border-transparent hover:text-blue-600 transition cursor-pointer">
+                    🔮 Summary MTD (SPV Matrix)
+                </button>
+                <button onclick="changeActiveTab('view-target-trends')" id="btn-view-target-trends" class="py-3 px-1 border-b-2 border-transparent hover:text-blue-600 transition cursor-pointer">
+                    📈 Tren Target Harian
+                </button>
+            </nav>
+        </div>
 
-        <!-- Main Dashboard View (Hidden Initially) -->
-        <section id="dashboardContent" class="grid grid-cols-1 lg:grid-cols-3 gap-6 hidden">
-            <!-- Left Data List / Table -->
-            <div class="lg:col-span-2 bg-white rounded-xl shadow overflow-hidden border border-gray-100 flex flex-col">
-                <div class="p-4 bg-gray-100 border-b border-gray-200 flex justify-between items-center">
-                    <h3 class="font-bold text-gray-700">📋 Rincian Performa Sales Person</h3>
-                    <input type="text" id="tableSearch" placeholder="Cari NIK atau Nama..." class="text-sm px-3 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <!-- 1. TAB VIEW: RANK BY DAY -->
+        <section id="view-rank-day" class="space-y-4 tab-panel-wrapper">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">⚡ Performance By Rank By Day</h2>
+                    <p class="text-xs text-slate-400">Peringkat produktivitas harian sales person dihitung berdasarkan target harian berjalan</p>
                 </div>
-                <div class="overflow-x-auto flex-1 max-h-[500px]">
-                    <table class="w-full text-left text-sm border-collapse" id="salesTable">
-                        <thead class="bg-gray-50 text-gray-600 font-semibold sticky top-0 border-b border-gray-200 z-10">
+                <input type="text" id="searchRankDay" placeholder="Cari Sales Person / Brand / SPV..." class="text-sm px-4 py-2 border border-slate-200 rounded-xl bg-white shadow-sm w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="overflow-x-auto custom-scrollbar max-h-[600px]">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-900 text-white font-bold sticky top-0 z-30 uppercase tracking-wider">
                             <tr>
-                                <th class="p-3">NIK & Nama</th>
-                                <th class="p-3 text-right">Net Sales (Rp)</th>
-                                <th class="p-3 text-right">Net Qty</th>
-                                <th class="p-3 text-right">UPT</th>
-                                <th class="p-3 text-right">Trans</th>
-                                <th class="p-3">SPV / Divisi</th>
+                                <th class="p-3.5 text-center w-14">Rank</th>
+                                <th class="p-3.5 w-16 text-center">Div</th>
+                                <th class="p-3.5 w-24">ID Karyawan</th>
+                                <th class="p-3.5">Nama Sales Person</th>
+                                <th class="p-3.5">Brand / Job Title</th>
+                                <th class="p-3.5 text-right">Target Harian</th>
+                                <th class="p-3.5 text-center">Ach %</th>
+                                <th class="p-3.5 text-center w-24">Kategori</th>
+                                <th class="p-3.5 text-right font-bold text-amber-400">Total Penjualan</th>
+                                <th class="p-3.5">SPV Pengawas</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100" id="salesTableBody">
-                            <!-- Data rows injected dynamically -->
+                        <tbody id="bodyRankDay" class="divide-y divide-slate-100 font-medium">
+                            <tr><td colspan="10" class="text-center py-10 text-slate-400 font-normal">Silakan upload file Excel Anda untuk memulai kalkulasi data visual.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </section>
 
-            <!-- Right Sidebar Analytics / Charts -->
-            <div class="space-y-6">
-                <!-- SPV / Leaderboard Chart -->
-                <div class="bg-white rounded-xl shadow p-4 border border-gray-100">
-                    <h3 class="font-bold text-gray-700 mb-3">📈 Kontribusi per SPV</h3>
-                    <div class="relative h-64">
-                        <canvas id="spvChart"></canvas>
-                    </div>
+        <!-- 2. TAB VIEW: RANK MTD GLOBAL -->
+        <section id="view-rank-mtd" class="space-y-4 tab-panel-wrapper hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">🏆 Performance By Rank MTD (Global)</h2>
+                    <p class="text-xs text-slate-400">Papan peringkat kumulatif bulanan satu pintu lintas seluruh bagian divisi</p>
                 </div>
+                <input type="text" id="searchRankMtd" placeholder="Cari NIK / Nama / Brand..." class="text-sm px-4 py-2 border border-slate-200 rounded-xl bg-white shadow-sm w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="overflow-x-auto custom-scrollbar max-h-[600px]">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-900 text-white font-bold sticky top-0 z-30 uppercase tracking-wider">
+                            <tr>
+                                <th class="p-3.5 text-center w-14">Rank</th>
+                                <th class="p-3.5 w-16 text-center">Div</th>
+                                <th class="p-3.5 w-24">ID Karyawan</th>
+                                <th class="p-3.5">Nama Sales Person</th>
+                                <th class="p-3.5">Brand / Job Title</th>
+                                <th class="p-3.5 text-right">Target MTD</th>
+                                <th class="p-3.5 text-center">Ach %</th>
+                                <th class="p-3.5 text-center w-24">Kategori</th>
+                                <th class="p-3.5 text-right text-emerald-400 font-bold">Total MTD</th>
+                                <th class="p-3.5">SPV Pengawas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyRankMtd" class="divide-y divide-slate-100 font-medium">
+                            <!-- Injected dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-                <!-- Brand / Division Breakdown -->
-                <div class="bg-white rounded-xl shadow p-4 border border-gray-100">
-                    <h3 class="font-bold text-gray-700 mb-3">🏷️ Breakdown per Divisi</h3>
-                    <div class="relative h-64">
-                        <canvas id="divisiChart"></canvas>
-                    </div>
+        <!-- 3. TAB VIEW: PER DIVISI RANK SPLIT -->
+        <section id="view-rank-divisi" class="space-y-6 tab-panel-wrapper hidden">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">🛡️ Performance Leaderboard By Divisi</h2>
+                    <p class="text-xs text-slate-400">Pemetaan performa penjualan terpilah berdasarkan rumpun divisi kerja masing-masing</p>
+                </div>
+                <select id="selectDivisiFilter" onchange="filterDivisiCards()" class="text-sm border border-slate-200 rounded-xl px-4 py-2 bg-white font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="ALL">Tampilkan Semua Divisi</option>
+                </select>
+            </div>
+            <div id="divisionTablesWrapper" class="grid grid-cols-1 gap-8">
+                <!-- Segmented tables auto-loaded -->
+            </div>
+        </section>
+
+        <!-- 4. TAB VIEW: SUMMARY MTD (Pie Chart SPV Grid Matrix) -->
+        <section id="view-summary-mtd" class="space-y-6 tab-panel-wrapper hidden">
+            <div>
+                <h2 class="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">🔮 Summary MTD - Matrix Capaian SPV</h2>
+                <p class="text-xs text-slate-400">Proporsi rasio persebaran status prestasi klasifikasi sales di bawah naungan supervisor</p>
+            </div>
+            <div id="spvMatrixPieGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically via canvas chart list creation -->
+            </div>
+        </section>
+
+        <!-- 5. TAB VIEW: TREN TARGET HARIAN -->
+        <section id="view-target-trends" class="space-y-4 tab-panel-wrapper hidden">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <h2 class="text-xl font-black text-slate-800 mb-2">📈 Line Chart Fluktuasi Target Harian</h2>
+                <p class="text-xs text-slate-400 mb-6">Visualisasi plot pergerakan bobot nominal target dari lembar rencana harian toko</p>
+                <div class="relative h-96">
+                    <canvas id="canvasDailyLineTarget"></canvas>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Project Instructions / Setup Guide Footer -->
-    <footer class="bg-gray-800 text-gray-400 mt-12 py-8 px-6 text-sm border-t border-gray-700">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-                <h4 class="text-white font-bold mb-2">🚀 Cara Upload ke GitHub Pages:</h4>
-                <ol class="list-decimal list-inside space-y-1 text-xs">
-                    <li>Buat sebuah repositori baru bernama <code class="bg-gray-900 px-1 py-0.5 rounded text-yellow-400">kpi-sales-2026</code> di akun GitHub Anda.</li>
-                    <li>Ekstrak isi dari file ZIP ini dan upload semua file langsung ke dalam repositori tersebut.</li>
-                    <li>Buka tab <strong>Settings</strong> di GitHub -> pilih menu <strong>Pages</strong> di bagian kiri.</li>
-                    <li>Ubah Source branch menjadi <code class="bg-gray-900 px-1 py-0.5 rounded text-yellow-400">main</code> atau <code class="bg-gray-900 px-1 py-0.5 rounded text-yellow-400">master</code>, lalu klik <strong>Save</strong>.</li>
-                    <li>Tunggu 1 menit dan website Anda akan tayang secara publik dan gratis!</li>
-                </ol>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-2">📦 Catatan Pengolahan File:</h4>
-                <p class="text-xs leading-relaxed">
-                    Aplikasi ini berjalan 100% di browser pengguna tanpa memerlukan database eksternal ataupun hosting berbayar. Algoritma internal akan mendeteksi baris gabungan teks seperti <code class="bg-gray-900 px-1 py-0.5 rounded text-white">"1467883-LEO WALDI"</code> secara otomatis, memisahkan ID dengan Nama secara rapi, serta mencocokkannya dengan database divisi dan SPV Anda apabila sheet tersebut disediakan di dalam file Excel yang sama.
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Logic Script handling files and graphs -->
+    <!-- App Engine JavaScript Processing Kernel -->
     <script>
-        let rawSalesData = [];
-        let employeeDatabase = {};
-        let spvChartInstance = null;
-        let divisiChartInstance = null;
+        let dbRankDay = [];
+        let dbRankMtd = [];
+        let uniqueDivisions = new Set();
+        let chartInstancesStore = [];
+        let dailyLineChartInstance = null;
 
-        document.getElementById('excelFileInput').addEventListener('change', handleFile, false);
-        document.getElementById('tableSearch').addEventListener('input', filterTable, false);
+        document.getElementById('excelFileInput').addEventListener('change', processExcelPayload, false);
+        document.getElementById('searchRankDay').addEventListener('input', applySearchFilters);
+        document.getElementById('searchRankMtd').addEventListener('input', applySearchFilters);
 
-        function formatCurrency(val) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val);
+        function changeActiveTab(panelId) {
+            document.querySelectorAll('.tab-panel-wrapper').forEach(el => el.classList.add('hidden'));
+            document.getElementById(panelId).classList.remove('hidden');
+            document.querySelectorAll('#dashboardTabsMenu button').forEach(btn => btn.classList.remove('tab-active'));
+            document.getElementById('btn-' + panelId).classList.add('tab-active');
         }
 
-        function formatNumber(val) {
-            return new Intl.NumberFormat('id-ID').format(val);
+        function getCategoryBadgeColor(cat) {
+            if (!cat) return 'bg-slate-100 text-slate-700';
+            const norm = cat.toLowerCase();
+            if (norm.includes('diamond')) return 'bg-emerald-100 text-emerald-800 font-bold border border-emerald-200';
+            if (norm.includes('gold')) return 'bg-amber-100 text-amber-800 font-bold border border-amber-200';
+            if (norm.includes('silver')) return 'bg-blue-100 text-blue-800 border border-blue-200';
+            if (norm.includes('stone')) return 'bg-rose-100 text-rose-800 border border-rose-200';
+            return 'bg-slate-100 text-slate-700';
         }
 
-        function cleanNumeric(val) {
-            if (!val) return 0;
-            if (typeof val === 'number') return val;
-            let cleaned = val.toString().replace(/\./g, '').replace(/,/g, '.');
-            let parsed = parseFloat(cleaned);
-            return isNaN(parsed) ? 0 : parsed;
+        function currencyFormatter(num) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num || 0);
         }
 
-        function handleFile(e) {
+        function percentDisplay(val) {
+            if (typeof val === 'number') {
+                return (val * (val <= 1 ? 100 : 1)).toFixed(1) + '%';
+            }
+            return val || '0%';
+        }
+
+        function processExcelPayload(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
             const file = files[0];
             const reader = new FileReader();
 
-            document.getElementById('uploadStatus').textContent = "Memproses file...";
-            document.getElementById('uploadStatus').className = "text-sm bg-yellow-600 px-3 py-1 rounded";
-
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
+            document.getElementById('uploadStatus').innerHTML = `<span class="inline-block w-2 h-2 rounded-full bg-blue-500 animate-ping"></span> Mengurai Struktur Lembar...`;
+            
+            reader.onload = function(evt) {
+                const arrBuffer = new Uint8Array(evt.target.result);
+                const wb = XLSX.read(arrBuffer, { type: 'array' });
                 
-                rawSalesData = [];
-                employeeDatabase = {};
+                dbRankDay = [];
+                dbRankMtd = [];
+                uniqueDivisions.clear();
+                
+                // Track loaded sheet tags visually
+                updateSheetStatusTrackers(wb.SheetNames);
 
-                // 1. Process Database Sheet if exists
-                if (workbook.SheetNames.includes('Database')) {
-                    const dbSheet = workbook.Sheets['Database'];
-                    const dbJson = XLSX.utils.sheet_to_json(dbSheet);
-                    dbJson.forEach(row => {
-                        const nik = row['NIK'] || row['nik'] || row['kode'] || '';
-                        if (nik) {
-                            employeeDatabase[nik.toString().trim()] = {
-                                brand: row['Brand'] || row['brand'] || '-',
-                                divisi: row['Divisi'] || row['divisi'] || '-',
-                                spv: row['SPV'] || row['spv'] || row['Nama SPV'] || 'No SPV'
-                            };
+                // --- 1. RESOLVE SHEET: PERFORMANCE BY RANK BY DAY ---
+                let sRankDayName = wb.SheetNames.find(s => s.toLowerCase().replace(/\s/g, '').includes('rankbyday'));
+                if (sRankDayName) {
+                    let rDayRows = XLSX.utils.sheet_to_json(wb.Sheets[sRankDayName]);
+                    rDayRows.forEach(row => {
+                        let rank = row['Rank'] || row['__EMPTY'] || '';
+                        let div = row['DIV'] || row['__EMPTY_1'] || '';
+                        let empId = row['Employee ID'] || row['__EMPTY_2'] || '';
+                        let name = row['Employee Name'] || row['__EMPTY_3'] || '';
+                        let brand = row['Job Title Name'] || row['__EMPTY_4'] || '';
+                        let dailyTarget = parseFloat(row['Target By Day'] || row['__EMPTY_5'] || 0);
+                        let ach = row['Ach'] || row['__EMPTY_6'] || '';
+                        let category = row['Category'] || row['__EMPTY_7'] || '';
+                        let total = parseFloat(row['Total'] || row['__EMPTY_8'] || 0);
+                        let spv = row['SPV'] || row['__EMPTY_9'] || 'No SPV';
+
+                        if (empId && name && empId.toString().trim() !== 'Employee ID' && !name.toString().includes('NO SALES')) {
+                            dbRankDay.push({
+                                rank: rank, div: div.toString().trim(), id: empId.toString().trim(),
+                                name: name.toString().trim(), brand: brand.toString().trim(),
+                                target: dailyTarget, ach: ach, category: category.toString().trim(),
+                                total: total, spv: spv.toString().trim()
+                            });
                         }
                     });
                 }
 
-                // 2. Process primary performance data sheet
-                let mainSheetName = workbook.SheetNames.find(name => name.toLowerCase().includes('kpi') || name.toLowerCase().includes('sales'));
-                if (!mainSheetName) mainSheetName = workbook.SheetNames[0];
+                // --- 2. RESOLVE SHEET: PERFORMANCE BY RANK MTD ---
+                let sRankMtdName = wb.SheetNames.find(s => s.toLowerCase().replace(/\s/g, '').includes('rankmtd'));
+                if (sRankMtdName) {
+                    let rMtdRows = XLSX.utils.sheet_to_json(wb.Sheets[sRankMtdName]);
+                    rMtdRows.forEach(row => {
+                        let rank = row['Rank'] || row['__EMPTY'] || '';
+                        let div = row['DIV'] || row['__EMPTY_1'] || '';
+                        let empId = row['Employee ID'] || row['__EMPTY_2'] || '';
+                        let name = row['Employee Name'] || row['__EMPTY_3'] || '';
+                        let brand = row['Job Title Name'] || row['__EMPTY_4'] || '';
+                        let target = parseFloat(row['Target'] || row['__EMPTY_5'] || 0);
+                        let ach = row['Ach'] || row['__EMPTY_6'] || '';
+                        let category = row['Category'] || row['__EMPTY_7'] || '';
+                        let total = parseFloat(row['Total'] || row['__EMPTY_8'] || 0);
+                        let spv = row['SPV'] || row['__EMPTY_9'] || 'No SPV';
 
-                const sheet = workbook.Sheets[mainSheetName];
-                const rows = XLSX.utils.sheet_to_json(sheet, { header: "A" });
-
-                rows.forEach(row => {
-                    const particular = row['B'] || '';
-                    // Identify row by looking for format matching "NIK-NAME" or rows containing sales person IDs
-                    if (particular && particular.includes('-') && !particular.toLowerCase().includes('particulars')) {
-                        const parts = particular.split('-');
-                        const nik = parts[0].trim();
-                        const name = parts.slice(1).join('-').trim();
-                        
-                        const netSales = cleanNumeric(row['D']);
-                        const netQty = cleanNumeric(row['E']);
-                        const upt = cleanNumeric(row['H']);
-                        const transCount = cleanNumeric(row['I']);
-
-                        if (netSales > 0 || netQty > 0 || transCount > 0) {
-                            // Link with database mapping
-                            const meta = employeeDatabase[nik] || { brand: '-', divisi: '-', spv: 'Unmapped SPV' };
-
-                            rawSalesData.push({
-                                nik: nik,
-                                name: name,
-                                netSales: netSales,
-                                netQty: netQty,
-                                upt: upt,
-                                transCount: transCount,
-                                brand: meta.brand,
-                                divisi: meta.divisi,
-                                spv: meta.spv
+                        if (empId && name && empId.toString().trim() !== 'Employee ID' && !name.toString().includes('NO SALES')) {
+                            let cleanDiv = div.toString().trim();
+                            uniqueDivisions.add(cleanDiv);
+                            dbRankMtd.push({
+                                rank: rank, div: cleanDiv, id: empId.toString().trim(),
+                                name: name.toString().trim(), brand: brand.toString().trim(),
+                                target: target, ach: ach, category: category.toString().trim(),
+                                total: total, spv: spv.toString().trim()
                             });
                         }
-                    }
+                    });
+                }
+
+                // --- 3. RESOLVE SHEET: PLAN BY DAY (TREND ANALYSIS) ---
+                let labelDaily = [];
+                let valuesDaily = [];
+                let sPlanName = wb.SheetNames.find(s => s.toLowerCase().replace(/\s/g, '').includes('planbyday'));
+                if (sPlanName) {
+                    let planRows = XLSX.utils.sheet_to_json(wb.Sheets[sPlanName], { header: 'A' });
+                    planRows.forEach(row => {
+                        let tknA = row['A'];
+                        let tknD = parseFloat(row['D'] || 0);
+                        if (tknA && !isNaN(tknD) && tknD > 0 && tknA.toString().includes('2026')) {
+                            labelDaily.push(tknA.toString().split(' ')[0]);
+                            valuesDaily.push(tknD);
+                        }
+                    });
+                }
+
+                // Set select dropdown list
+                const sel = document.getElementById('selectDivisiFilter');
+                sel.innerHTML = '<option value="ALL">Tampilkan Semua Divisi</option>';
+                uniqueDivisions.forEach(d => {
+                    sel.innerHTML += `<option value="${d}">Divisi ${d}</option>`;
                 });
 
-                if (rawSalesData.length > 0) {
-                    document.getElementById('uploadStatus').textContent = "Sukses Memuat Data";
-                    document.getElementById('uploadStatus').className = "text-sm bg-green-600 px-3 py-1 rounded";
-                    
-                    document.getElementById('summaryWidgets').classList.remove('hidden');
-                    document.getElementById('dashboardContent').classList.remove('hidden');
+                // Display application container
+                document.getElementById('dashboardTabsMenu').style.display = 'block';
+                document.getElementById('uploadStatus').innerHTML = `✅ Kompilasi Data Berhasil`;
+                document.getElementById('uploadStatus').className = "text-sm bg-green-600 px-4 py-1.5 rounded-full font-semibold text-white shadow";
 
-                    calculateSummary();
-                    populateTable(rawSalesData);
-                    renderCharts();
-                } else {
-                    document.getElementById('uploadStatus').textContent = "Format tidak cocok";
-                    document.getElementById('uploadStatus').className = "text-sm bg-red-600 px-3 py-1 rounded";
-                    alert("Aplikasi tidak menemukan format NIK-Nama yang valid di Kolom B.");
-                }
+                // Trigger UI Render engine
+                renderTablesUI(dbRankDay, 'bodyRankDay');
+                renderTablesUI(dbRankMtd, 'bodyRankMtd');
+                renderDivisionSplitCards();
+                renderSPVPieMatrixGrid();
+                buildLineChartDailyTrends(labelDaily, valuesDaily);
             };
             reader.readAsArrayBuffer(file);
         }
 
-        function calculateSummary() {
-            let totalSales = 0;
-            let totalQty = 0;
-            let totalTrans = 0;
-            let totalUptSum = 0;
-
-            rawSalesData.forEach(item => {
-                totalSales += item.netSales;
-                totalQty += item.netQty;
-                totalTrans += item.transCount;
-                totalUptSum += item.upt;
-            });
-
-            const avgUpt = rawSalesData.length > 0 ? (totalUptSum / rawSalesData.length).toFixed(2) : 0;
-
-            document.getElementById('widgetNetSales').textContent = formatCurrency(totalSales);
-            document.getElementById('widgetQty').textContent = formatNumber(totalQty) + " pcs";
-            document.getElementById('widgetUPT').textContent = avgUpt;
-            document.getElementById('widgetTrans').textContent = formatNumber(totalTrans);
+        function updateSheetStatusTrackers(sheets) {
+            const toggleColor = (id, keywords) => {
+                let match = sheets.some(s => keywords.every(k => s.toLowerCase().includes(k)));
+                let node = document.getElementById(id);
+                if (match) {
+                    node.textContent = "✓ " + node.textContent.substring(2);
+                    node.className = "flex items-center gap-2 text-emerald-400 font-bold";
+                }
+            };
+            toggleColor('mKPI', ['kpi']);
+            toggleColor('mDB', ['data']);
+            toggleColor('mTarget', ['target']);
+            toggleColor('mPlan', ['plan']);
+            toggleColor('mACV', ['acv']);
+            toggleColor('mSummary', ['summary']);
+            toggleColor('mRankMTD', ['rank', 'mtd']);
+            toggleColor('mRankDay', ['rank', 'day']);
         }
 
-        function populateTable(data) {
-            const tbody = document.getElementById('salesTableBody');
+        function renderTablesUI(recordsData, tableBodyId) {
+            const tbody = document.getElementById(tableBodyId);
             tbody.innerHTML = '';
 
-            data.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-50 transition border-b border-gray-100 text-xs";
-                tr.innerHTML = `
-                    <td class="p-3">
-                        <div class="font-bold text-gray-900">${item.nik}</div>
-                        <div class="text-gray-500 text-xs">${item.name}</div>
+            if (recordsData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center py-6 text-slate-400">Baris data tidak ditemukan atau format kosong.</td></tr>`;
+                return;
+            }
+
+            recordsData.forEach((item, index) => {
+                let rowTr = document.createElement('tr');
+                rowTr.className = "hover:bg-slate-50 transition border-b border-slate-100 text-slate-700";
+                rowTr.innerHTML = `
+                    <td class="p-3 text-center font-extrabold text-slate-500">${index + 1}</td>
+                    <td class="p-3 text-center font-bold text-slate-600">${item.div}</td>
+                    <td class="p-3 font-mono text-blue-600 font-bold">${item.id}</td>
+                    <td class="p-3 text-slate-900 font-semibold">${item.name}</td>
+                    <td class="p-3 text-slate-500 font-medium">${item.brand}</td>
+                    <td class="p-3 text-right font-medium text-slate-400">${currencyFormatter(item.target)}</td>
+                    <td class="p-3 text-center font-bold text-emerald-600">${percentDisplay(item.ach)}</td>
+                    <td class="p-3 text-center">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${getCategoryBadgeColor(item.category)}">
+                            ${item.category}
+                        </span>
                     </td>
-                    <td class="p-3 text-right font-medium text-gray-900">${formatNumber(item.netSales)}</td>
-                    <td class="p-3 text-right text-gray-700">${formatNumber(item.netQty)}</td>
-                    <td class="p-3 text-right font-semibold text-blue-600">${item.upt.toFixed(2)}</td>
-                    <td class="p-3 text-right text-gray-600">${formatNumber(item.transCount)}</td>
-                    <td class="p-3">
-                        <span class="block font-semibold text-gray-700">${item.spv}</span>
-                        <span class="text-[10px] text-gray-400 bg-gray-100 px-1 py-0.5 rounded">${item.divisi}</span>
-                    </td>
+                    <td class="p-3 text-right font-bold text-slate-900">${currencyFormatter(item.total)}</td>
+                    <td class="p-3 text-slate-600 font-medium">${item.spv}</td>
                 `;
-                tbody.appendChild(tr);
+                tbody.appendChild(rowTr);
             });
         }
 
-        function filterTable() {
-            const query = document.getElementById('tableSearch').value.toLowerCase();
-            const filtered = rawSalesData.filter(item => 
-                item.nik.toLowerCase().includes(query) || 
-                item.name.toLowerCase().includes(query) ||
-                item.spv.toLowerCase().includes(query) ||
-                item.divisi.toLowerCase().includes(query)
-            );
-            populateTable(filtered);
+        function applySearchFilters() {
+            let qDay = document.getElementById('searchRankDay').value.toLowerCase();
+            let matchedDay = dbRankDay.filter(i => i.id.toLowerCase().includes(qDay) || i.name.toLowerCase().includes(qDay) || i.brand.toLowerCase().includes(qDay) || i.spv.toLowerCase().includes(qDay));
+            renderTablesUI(matchedDay, 'bodyRankDay');
+
+            let qMtd = document.getElementById('searchRankMtd').value.toLowerCase();
+            let matchedMtd = dbRankMtd.filter(i => i.id.toLowerCase().includes(qMtd) || i.name.toLowerCase().includes(qMtd) || i.brand.toLowerCase().includes(qMtd) || i.spv.toLowerCase().includes(qMtd));
+            renderTablesUI(matchedMtd, 'bodyRankMtd');
         }
 
-        function renderCharts() {
-            // Group By SPV
-            const spvData = {};
-            // Group By Division
-            const divisiData = {};
+        function renderDivisionSplitCards() {
+            const wrap = document.getElementById('divisionTablesWrapper');
+            wrap.innerHTML = '';
 
-            rawSalesData.forEach(item => {
-                spvData[item.spv] = (spvData[item.spv] || 0) + item.netSales;
-                divisiData[item.divisi] = (divisiData[item.divisi] || 0) + item.netSales;
+            uniqueDivisions.forEach(divName => {
+                let divRecords = dbRankMtd.filter(i => i.div === divName);
+                divRecords.sort((a, b) => b.total - a.total);
+
+                let cardNode = document.createElement('div');
+                cardNode.className = "bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden division-card-item";
+                cardNode.setAttribute('data-division', divName);
+
+                let rowsHtml = '';
+                divRecords.forEach((item, idx) => {
+                    rowsHtml += `
+                        <tr class="hover:bg-slate-50 border-b border-slate-100">
+                            <td class="p-3 text-center font-black text-slate-400">${idx + 1}</td>
+                            <td class="p-3 font-bold text-blue-600">${item.id}</td>
+                            <td class="p-3 font-semibold text-slate-800">${item.name}</td>
+                            <td class="p-3 text-slate-500">${item.brand}</td>
+                            <td class="p-3 text-right font-bold text-slate-900">${currencyFormatter(item.total)}</td>
+                            <td class="p-3 text-center font-bold text-emerald-600">${percentDisplay(item.ach)}</td>
+                            <td class="p-3 text-center">
+                                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${getCategoryBadgeColor(item.category)}">${item.category}</span>
+                            </td>
+                            <td class="p-3 text-slate-600 font-medium">${item.spv}</td>
+                        </tr>
+                    `;
+                });
+
+                cardNode.innerHTML = `
+                    <div class="px-6 py-4 bg-slate-900 text-white flex justify-between items-center">
+                        <h3 class="font-extrabold text-sm tracking-wide">🛡️ Peringkat Internal Divisi: ${divName}</h3>
+                        <span class="text-xs bg-blue-600 px-3 py-1 rounded-full font-bold shadow-md">${divRecords.length} Anggota</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3 text-center w-12">Rank</th>
+                                    <th class="p-3">Employee ID</th>
+                                    <th class="p-3">Nama Karyawan</th>
+                                    <th class="p-3">Brand</th>
+                                    <th class="p-3 text-right">Total Aktual</th>
+                                    <th class="p-3 text-center">Ach %</th>
+                                    <th class="p-3 text-center">Kategori</th>
+                                    <th class="p-3">SPV Atasan</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rowsHtml}</tbody>
+                        </table>
+                    </div>
+                `;
+                wrap.appendChild(cardNode);
             });
+        }
 
-            // Destroy existing charts to prevent memory leaks
-            if (spvChartInstance) spvChartInstance.destroy();
-            if (divisiChartInstance) divisiChartInstance.destroy();
-
-            // SPV Chart
-            const ctxSpv = document.getElementById('spvChart').getContext('2d');
-            spvChartInstance = new Chart(ctxSpv, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(spvData),
-                    datasets: [{
-                        label: 'Net Sales (Rp)',
-                        data: Object.values(spvData),
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
+        function filterDivisiCards() {
+            const target = document.getElementById('selectDivisiFilter').value;
+            document.querySelectorAll('.division-card-item').forEach(card => {
+                if (target === 'ALL' || card.getAttribute('data-division') === target) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
                 }
             });
+        }
 
-            // Division Chart
-            const ctxDiv = document.getElementById('divisiChart').getContext('2d');
-            divisiChartInstance = new Chart(ctxDiv, {
-                type: 'doughnut',
+        function renderSPVPieMatrixGrid() {
+            const grid = document.getElementById('spvMatrixPieGrid');
+            grid.innerHTML = '';
+            chartInstancesStore.forEach(c => c.destroy());
+            chartInstancesStore = [];
+
+            let matrix = {};
+            dbRankMtd.forEach(item => {
+                if (!matrix[item.spv]) matrix[item.spv] = { diamond: 0, gold: 0, silver: 0, stone: 0 };
+                let norm = item.category.toLowerCase();
+                if (norm.includes('diamond')) matrix[item.spv].diamond++;
+                else if (norm.includes('gold')) matrix[item.spv].gold++;
+                else if (norm.includes('silver')) matrix[item.spv].silver++;
+                else matrix[item.spv].stone++;
+            });
+
+            Object.keys(matrix).forEach((spvName, index) => {
+                let cell = document.createElement('div');
+                cell.className = "bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center hover:scale-[1.02] transition duration-300";
+                cell.innerHTML = `
+                    <h4 class="font-extrabold text-slate-800 text-xs tracking-wider uppercase mb-4 border-b border-slate-100 pb-2 w-full text-center">${spvName}</h4>
+                    <div class="relative w-48 h-48">
+                        <canvas id="canvasSpvPie-${index}"></canvas>
+                    </div>
+                `;
+                grid.appendChild(cell);
+
+                let ctx = document.getElementById(`canvasSpvPie-${index}`).getContext('2d');
+                let counts = matrix[spvName];
+
+                let pie = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Diamond', 'Gold', 'Silver', 'Stone'],
+                        datasets: [{
+                            data: [counts.diamond, counts.gold, counts.silver, counts.stone],
+                            backgroundColor: ['#10b981', '#fbbf24', '#3b82f6', '#f87171'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9, weight: 'bold' } } }
+                        },
+                        cutout: '60%'
+                    }
+                });
+                chartInstancesStore.push(pie);
+            });
+        }
+
+        function buildLineChartDailyTrends(labels, values) {
+            if (dailyLineChartInstance) dailyLineChartInstance.destroy();
+
+            let ctx = document.getElementById('canvasDailyLineTarget').getContext('2d');
+            dailyLineChartInstance = new Chart(ctx, {
+                type: 'line',
                 data: {
-                    labels: Object.keys(divisiData),
+                    labels: labels,
                     datasets: [{
-                        data: Object.values(divisiData),
-                        backgroundColor: ['#f59e0b', '#10b981', '#ec4899', '#8b5cf6', '#6366f1', '#6b7280']
+                        label: 'Target Nominal Penjualan (Rp)',
+                        data: values,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#2563eb'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } }
+                    scales: {
+                        y: { ticks: { font: { size: 10, weight: 'bold' } }, grid: { color: '#f1f5f9' } },
+                        x: { ticks: { font: { size: 10 } }, grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
                 }
             });
         }
