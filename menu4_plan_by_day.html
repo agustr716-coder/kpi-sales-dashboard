@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <title>4. Plan By Day</title>
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
-    
-    <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center gap-4">
-            <span class="text-3xl">🏛️</span>
-            <div>
-                <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Multi-Page Dedicated Subsystem</p>
-            </div>
-        </div>
-        <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 border border-slate-700 px-4 py-2 rounded-xl transition shadow flex items-center gap-1.5">
-            🏠 Home Dashboard
-        </a>
+    <nav class="bg-slate-900 text-white p-5 flex justify-between items-center shadow-md">
+        <span class="font-black text-blue-400">📅 4. PLAN BY DAY TIMELINES</span>
+        <a href="index.html" class="bg-slate-800 text-amber-400 text-xs px-4 py-2 rounded-xl border border-slate-700 font-bold">🏠 Home Dashboard</a>
     </nav>
-
-    <main class="max-w-5xl mx-auto p-6 mt-6 space-y-6">
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                <span class="text-3xl">📅</span>
-                <div>
-                    <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide">4. Plan By Day</h2>
-                    <p class="text-xs text-slate-400">Pemisahan target nominal rupiah harian untuk Weekday dan Weekend.</p>
-                </div>
+    <main class="max-w-4xl mx-auto p-6 mt-6 space-y-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="text-xs font-black uppercase text-slate-700 tracking-wider">📅 Kalender Target Distribusi Kerja Toko</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-slate-800 text-white font-bold uppercase">
+                        <tr><th class="p-2.5">Hari Ke-</th><th class="p-2.5">Kategori</th><th class="p-2.5 text-right">Beban Target Harian</th><th class="p-2.5 text-center">Status</th></tr>
+                    </thead>
+                    <tbody id="tbodyPlanDays" class="divide-y divide-slate-100 font-medium"></tbody>
+                </table>
             </div>
-            <div class="py-12 text-center text-slate-400 text-xs">Silakan hubungkan file data induk melalui modul upload untuk menampilkan infografis lembar kerja ini.</div>
         </div>
-        <div class="text-center">
-            <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition bg-slate-200/50 hover:bg-slate-200 px-5 py-2.5 rounded-xl">&larr; Kembali ke Dashboard Utama</a>
-        </div>
+        <div class="text-center"><a href="index.html" class="text-xs text-slate-400 font-bold">&larr; Kembali ke Dashboard</a></div>
     </main>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('MDS_ADMIN_LOGGED_IN') !== 'true') { alert("Akses Ditolak!"); window.location.href="index.html"; }
+            let tbody = document.getElementById('tbodyPlanDays');
+            let fmt = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+            
+            for(let i = 1; i <= 26; i++) {
+                let isWeekend = (i % 6 === 0 || i % 7 === 0); // Simulasi weekend ritel kalender kerja
+                let dayLabel = isWeekend ? "Weekend (Sabtu/Minggu)" : "Weekday (Senin-Jumat)";
+                let targetNominal = isWeekend ? 1500000 : 1000000;
+                let bgBadge = isWeekend ? "bg-amber-100 text-amber-800 border-amber-200" : "bg-blue-100 text-blue-800 border-blue-200";
+                
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-slate-600">Hari Kerja ${i}</td>
+                    <td class="p-2.5"><span class="px-2 py-0.5 rounded-lg text-[10px] font-black border ${bgBadge}">${dayLabel}</span></td>
+                    <td class="p-2.5 text-right font-black text-slate-900">${fmt.format(targetNominal)}</td>
+                    <td class="p-2.5 text-center text-emerald-500 font-bold">✓ Active</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        });
+    </script>
 </body>
 </html>
