@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDS 312 Lippo Plaza Jambi - Robust Core ERP</title>
+    <title>MDS 312 Lippo Plaza Jambi - Perfect ERP Suite</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,24 +16,24 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased custom-scrollbar">
 
-    <!-- Top Management Navbar -->
+    <!-- Top Management Navbar Header -->
     <nav class="bg-slate-900 text-white shadow-xl px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50">
         <div class="flex items-center gap-4">
             <span class="text-3xl">🏛️</span>
             <div>
                 <h1 class="text-xl font-black tracking-wide uppercase text-blue-400">Enterprise Sales Engine</h1>
-                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Versi Perbaikan Resiliensi Data</p>
+                <p class="text-xs text-slate-400 font-medium tracking-wider">MDS 312 Lippo Plaza Jambi • Sistem Template Standardisasi Terintegrasi</p>
             </div>
         </div>
         <div class="text-xs font-bold bg-slate-800 px-4 py-2 border border-slate-700 text-slate-300 rounded-full">
-            🖥️ Status: <span class="text-emerald-400">Smart Resilient Parsing Engine Active</span>
+            🖥️ Database: <span class="text-emerald-400">Dual Template Download Engine Active</span>
         </div>
     </nav>
 
     <!-- Master Workspace Container -->
     <main class="max-w-7xl mx-auto p-6 space-y-6">
 
-        <!-- 9 MENUS HUBS SYSTEM (PERMANENT) -->
+        <!-- 9 MENUS HUBS SYSTEM (PERMANENTLY VISIBLE) -->
         <section class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 space-y-3">
             <p class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
                 ⚙️ DASHBOARD CONTROL HUB:
@@ -69,37 +69,46 @@
             </div>
         </section>
 
-        <!-- INPUT KPI AREA -->
+        <!-- 1. TAB MENU: INPUT KPI SALES PERSON -->
         <section id="panel-input-kpi" class="space-y-4 workspace-panel">
             <div class="bg-white rounded-3xl p-6 border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
                 <div class="space-y-3">
-                    <h3 class="text-xs font-black text-slate-700 uppercase">📅 Pengaturan Dokumen Harian</h3>
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-1">
+                        <h3 class="text-xs font-black text-slate-700 uppercase">📅 Unggah File KPI Harian</h3>
+                    </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pilih Tanggal Penjualan:</label>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Pilih Tanggal Laporan:</label>
                         <input type="date" id="kpiSelectDate" class="w-full text-xs px-3 py-2 border border-slate-200 rounded-xl bg-white font-bold focus:outline-none" />
                     </div>
-                    <div class="border-2 border-dashed border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center bg-slate-50 relative cursor-pointer group">
+                    
+                    <!-- NEW SPECIFIC FEATURE REQUEST: Excel KPI File Template Downloader -->
+                    <button onclick="downloadOfficialKpiExcelTemplate()" class="w-full bg-slate-800 hover:bg-slate-700 text-blue-400 border border-blue-400/40 text-[10px] font-bold py-2 px-3 rounded-xl transition cursor-pointer flex items-center justify-center gap-1.5 shadow">
+                        📥 Unduh Template File KPI Harian (.xlsx)
+                    </button>
+
+                    <div class="border-2 border-dashed border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center bg-slate-50 relative cursor-pointer group">
                         <input type="file" id="uploadKpiDailyFile" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
-                        <span class="text-xl mb-1">📊</span>
-                        <p class="text-[10px] font-bold text-slate-600 text-center text-blue-600">Pilih & Scan File Excel</p>
+                        <span class="text-lg mb-0.5">📊</span>
+                        <p class="text-[10px] font-bold text-slate-600 text-center text-blue-600">Pilih File Excel Hasil Isi</p>
                     </div>
                     <button onclick="saveCurrentUploadedKpi()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs shadow cursor-pointer transition">
                         💾 Simpan Permanen Tanggal Ini
                     </button>
                 </div>
-                <div class="md:col-span-2 p-5 bg-slate-900 text-white rounded-2xl text-xs space-y-2 shadow h-full flex flex-col justify-center">
-                    <p class="font-bold text-blue-400 uppercase tracking-wider">💾 Log Database Penjualan Lokal:</p>
-                    <p class="text-slate-300 leading-relaxed text-[11px]">Sistem pencarian baris sekarang menggunakan metode <b>Smart Value Scanning</b>. Di baris mana pun data <i>Particulars (NIK-Nama)</i> Anda berada, website akan memindai secara menyeluruh dan mengabaikan baris judul kosong.</p>
-                    <div class="pt-2 flex flex-wrap gap-2" id="savedDatesTagsContainer">
-                        <!-- Dates tags will appear here -->
+                
+                <div class="md:col-span-2 p-5 bg-slate-900 text-white rounded-2xl text-xs space-y-2 h-full flex flex-col justify-center shadow">
+                    <p class="font-bold text-blue-400 uppercase tracking-wider">💾 Log Database Penjualan Lokal & Sinkronisasi:</p>
+                    <p class="text-[11px] text-slate-300 leading-relaxed">Agar penguraian pas dan terbaca sempurna, gunakan tombol <b>"Unduh Template File KPI Harian"</b> untuk menyelaraskan nama kolom. Data yang disimpan akan langsung diakumulasikan ke grafik performa.</p>
+                    <div class="pt-1 flex flex-wrap gap-2" id="savedDatesTagsContainer">
+                        <!-- Date labels injected -->
                     </div>
                 </div>
             </div>
 
-            <!-- TABLE VIEW FOR ACCUMULATED DATA -->
+            <!-- PREVIEW ACCUMULATIVE DATA TABLES -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                 <div class="px-5 py-4 bg-slate-900 text-white flex justify-between items-center">
-                    <h3 class="font-extrabold text-xs uppercase tracking-wider">📋 Hasil Preview Seluruh Tanggal Tersimpan</h3>
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider">📋 Preview Data Penjualan Terkumpul</h3>
                     <button onclick="clearAllKpiDatabase()" class="bg-rose-700 hover:bg-rose-900 text-[10px] text-white font-bold py-1 px-2.5 rounded-lg border-none cursor-pointer">🗑️ Reset Total Database</button>
                 </div>
                 <div class="overflow-x-auto max-h-96 custom-scrollbar">
@@ -117,15 +126,118 @@
                             </tr>
                         </thead>
                         <tbody id="tableKpiAccumulatedBody" class="divide-y divide-slate-100 font-medium text-slate-700">
-                            <tr><td colspan="8" class="text-center py-10 text-slate-400 font-normal">Belum ada data penjualan. Silakan pilih berkas Excel harian di atas.</td></tr>
+                            <!-- Populated on boot -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- STANDBY DUMMY MODULE PANELS FOR OTHER STAGES -->
-        <section id="panel-db-karyawan" class="workspace-panel hidden bg-white p-6 rounded-2xl border border-slate-100"><p class="text-xs">Database Panel Active</p></section>
+        <!-- 2. TAB MENU: DATABASE KARYAWAN -->
+        <section id="panel-db-karyawan" class="space-y-6 workspace-panel hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- FORM MANUAL -->
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3 lg:col-span-2">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">📝 Form Tambah Karyawan Baru</h4>
+                    </div>
+                    <form id="formKaryawanManual" onsubmit="handleManualKaryawanSubmit(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Status Masa Kerja:</label>
+                            <select id="fMasaKerja" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl bg-white font-medium focus:outline-none">
+                                <option value="Full Time">Full Time</option>
+                                <option value="20 Hari">20 Hari</option>
+                                <option value="16 Hari">16 Hari</option>
+                                <option value="4 Hari">4 Hari</option>
+                                <option value="SA">SA</option>
+                                <option value="On Off">On Off</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Prefix:</label>
+                            <select id="fPrefix" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl bg-white font-medium focus:outline-none">
+                                <option value="CV">CV</option>
+                                <option value="DP">DP</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Divisi:</label>
+                            <select id="fDivisi" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl bg-white font-medium focus:outline-none">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="SA">SA</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Employee ID / NIK:</label>
+                            <input type="text" id="fNIK" placeholder="1480180" required class="w-full px-3 py-1.5 border border-slate-200 rounded-xl focus:outline-none font-semibold" />
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Nama Karyawan:</label>
+                            <input type="text" id="fNama" placeholder="TRI NESYA BR SILALAHI" required class="w-full px-3 py-1.5 border border-slate-200 rounded-xl focus:outline-none uppercase font-semibold" />
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Brand / Merek:</label>
+                            <input type="text" id="fBrand" placeholder="SORELLA" required class="w-full px-3 py-1.5 border border-slate-200 rounded-xl focus:outline-none uppercase font-semibold" />
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">SPV:</label>
+                            <select id="fSPV" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl bg-white focus:outline-none">
+                                <option value="TRI ENDANG N">TRI ENDANG N</option>
+                                <option value="SALMA">SALMA</option>
+                                <option value="YUSRIAH">YUSRIAH</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded-xl cursor-pointer transition shadow-none border-none">➕ Tambah Data</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- BATCH BATCH UPLOAD WITH THE OTHER DATABASE TEMPLATE -->
+                <div class="bg-slate-900 text-white p-5 rounded-3xl flex flex-col justify-between shadow-lg">
+                    <div>
+                        <h4 class="text-xs font-black uppercase text-blue-400 tracking-wider border-b border-slate-800 pb-2 mb-2">📦 Batch Impor Database</h4>
+                        <p class="text-[10px] text-slate-400 leading-relaxed mb-3">Klik tombol di bawah untuk mendownload lembar template susunan data master karyawan Anda.</p>
+                        <button onclick="downloadOfficialDatabaseExcelTemplate()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-400/40 text-[10px] font-bold py-2 px-3 rounded-xl transition cursor-pointer flex items-center justify-center gap-1.5 shadow">
+                            📥 Unduh Template Excel Database (.xlsx)
+                        </button>
+                    </div>
+                    <div class="relative border border-dashed border-slate-700 rounded-xl p-3 bg-slate-800/40 hover:bg-slate-800/80 transition duration-300 flex flex-col items-center justify-center cursor-pointer">
+                        <input type="file" id="uploadDbBatchExcel" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-30" />
+                        <span class="text-lg">📁</span>
+                        <span class="text-[10px] font-bold text-slate-300">Upload Hasil Isi Database</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE DATABASES VIEW -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="px-5 py-4 bg-slate-900 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div><h3 class="font-extrabold text-xs uppercase tracking-wider">📋 Repositori Data Profil Karyawan</h3></div>
+                </div>
+                <div class="overflow-x-auto max-h-96 custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-100 text-slate-600 font-bold sticky top-0 border-b border-slate-200 uppercase">
+                            <tr>
+                                <th class="p-3 text-center">Masa Kerja</th>
+                                <th class="p-3 text-center">No</th>
+                                <th class="p-3 text-center">Prefix</th>
+                                <th class="p-3 text-center">Div</th>
+                                <th class="p-3">Employee ID</th>
+                                <th class="p-3">Employee Name</th>
+                                <th class="p-3">Job Title Name</th>
+                                <th class="p-3">SPV Pengawas</th>
+                                <th class="p-3 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableKaryawanMasterBody" class="divide-y divide-slate-100 font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- OTHER DUMMY PANEL WRAPPERS -->
         <section id="panel-breakdown-target" class="workspace-panel hidden bg-white p-6 rounded-2xl border border-slate-100"></section>
         <section id="panel-plan-day" class="workspace-panel hidden bg-white p-6 rounded-2xl border border-slate-100"></section>
         <section id="panel-acv-mtd" class="workspace-panel hidden bg-white p-6 rounded-2xl border border-slate-100"></section>
@@ -139,12 +251,16 @@
     <script>
         let databaseByDates = JSON.parse(localStorage.getItem('MDS_KPI_DATABASE_DATES')) || {};
         let currentUploadBuffer = [];
+        let employeeMasterDB = [
+            { masaKerja: 'Full Time', seq: '1 1', prefix: 'CV', div: '1', id: '1480180', name: 'TRI NESYA BR SILALAHI', brand: 'SORELLA', spv: 'TRI ENDANG N' }
+        ];
 
         window.addEventListener('DOMContentLoaded', () => {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('kpiSelectDate').value = today;
             renderSavedDatesTagsUI();
             renderAccumulatedKpiTableUI();
+            renderKaryawanTableUI(employeeMasterDB);
         });
 
         function changeWorkspace(id) {
@@ -156,24 +272,52 @@
             document.getElementById('btn-' + id).classList.add('menu-btn-active');
         }
 
+        // FUNCTION 1: DYNAMIC GENERATION FOR THE EXCEL KPI DAILY REPORT TEMPLATE
+        function downloadOfficialKpiExcelTemplate() {
+            const headers = [
+                ["MDS 312 LIPPO PLAZA JAMBI - LAPORAN PENJUALAN HARIAN HARIAN"],
+                ["Tanggal Pembuatan Template: November 2026"],
+                [],
+                ["No", "Particulars", "Target Sales", "Net Sales", "Net qty", "Discount", "ATV", "UPT", "Trans. Count"]
+            ];
+            
+            const sampleData = [
+                [1, "1480180-TRI NESYA BR SILALAHI", 1000000, 1150000, 4, 0, 287500, 2.0, 2],
+                [2, "1479500-PITRIANI GEA", 1000000, 950000, 3, 50000, 316667, 1.5, 3]
+            ];
+
+            const combined = headers.concat(sampleData);
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(combined);
+            XLSX.utils.book_append_sheet(wb, ws, "KPI Harian");
+            XLSX.writeFile(wb, "template_kpi_sales_harian.xlsx");
+        }
+
+        // FUNCTION 2: DYNAMIC GENERATION FOR THE DATABASE PROFILE EXCEL TEMPLATE 
+        function downloadOfficialDatabaseExcelTemplate() {
+            const headers = [["Masa Kerja", "Prefix", "Div", "Employee ID", "Employee Name", "Job Title Name", "SPV"]];
+            const sampleData = [
+                ["Full Time", "CV", "1", "1480180", "TRI NESYA BR SILALAHI", "SORELLA", "TRI ENDANG N"]
+            ];
+            const combined = headers.concat(sampleData);
+            const wb = XLSX.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(combined);
+            XLSX.utils.book_append_sheet(wb, ws, "Database Karyawan");
+            XLSX.writeFile(wb, "template_database_karyawan.xlsx");
+        }
+
         function forceNum(val) {
             if (!val) return 0;
             if (typeof val === 'number') return val;
             let str = val.toString().replace(/[^0-9.,-]/g, '');
-            if (str.includes(',') && str.includes('.')) {
-                str = str.replace(/\./g, '').replace(/,/g, '.');
-            } else if (str.includes(',')) {
-                str = str.replace(/,/g, '.');
-            }
+            if (str.includes(',') && str.includes('.')) str = str.replace(/\./g, '').replace(/,/g, '.');
+            else if (str.includes(',')) str = str.replace(/,/g, '.');
             let res = parseFloat(str);
             return isNaN(res) ? 0 : res;
         }
 
-        function formatRupiah(v) {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v || 0);
-        }
+        function formatRupiah(v) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v || 0); }
 
-        // BULLETPROOF PARSING LOGIC ENGINE ATTACHED
         document.getElementById('uploadKpiDailyFile').addEventListener('change', (e) => {
             const files = e.target.files;
             if(!files || files.length === 0) return;
@@ -181,18 +325,14 @@
             const reader = new FileReader();
 
             reader.onload = function(evt) {
-                const data = new Uint8Array(evt.target.result);
-                const wb = XLSX.read(data, { type: 'array' });
+                const arr = new Uint8Array(evt.target.result);
+                const wb = XLSX.read(arr, { type: 'array' });
                 const ws = wb.Sheets[wb.SheetNames[0]];
-                
-                // Read sheet as raw 2D array matrix to bypass missing column labels or offset variations!
                 const matrix = XLSX.utils.sheet_to_json(ws, { header: 1 });
                 currentUploadBuffer = [];
 
                 matrix.forEach(row => {
-                    if (!row || row.length < 3) return;
-
-                    // Scan every single cell cell-by-cell in the current row to find a matching "Particulars" pattern (e.g. "1480180-NAMA")
+                    if (!row || row.length < 2) return;
                     let foundPartCell = null;
                     let cellIndex = -1;
 
@@ -201,56 +341,40 @@
                         if (val && val.toString().includes('-') && /\d+/.test(val.toString()) && !val.toString().toLowerCase().includes('particular')) {
                             foundPartCell = val.toString().trim();
                             cellIndex = idx;
-                            break; 
+                            break;
                         }
                     }
 
-                    // If a valid particulars cell is identified inside this row matrix, extract metrics from neighboring positions relatively
                     if (foundPartCell && cellIndex !== -1) {
-                        let target = row[cellIndex + 1];
-                        let netSales = row[cellIndex + 2];
-                        let netQty = row[cellIndex + 3];
-                        let discount = row[cellIndex + 4];
-                        let atv = row[cellIndex + 5];
-                        let upt = row[cellIndex + 6];
-                        let transCount = row[cellIndex + 7];
-
                         currentUploadBuffer.push({
                             particulars: foundPartCell,
-                            targetSales: forceNum(target),
-                            netSales: forceNum(netSales),
-                            netQty: forceNum(netQty),
-                            discount: forceNum(discount),
-                            atv: forceNum(atv),
-                            upt: forceNum(upt),
-                            transCount: forceNum(transCount)
+                            targetSales: forceNum(row[cellIndex + 1]),
+                            netSales: forceNum(row[cellIndex + 2]),
+                            netQty: forceNum(row[cellIndex + 3]),
+                            discount: forceNum(row[cellIndex + 4]),
+                            atv: forceNum(row[cellIndex + 5]),
+                            upt: forceNum(row[cellIndex + 6]),
+                            transCount: forceNum(row[cellIndex + 7])
                         });
                     }
                 });
-
-                if (currentUploadBuffer.length > 0) {
-                    alert(`💡 Berhasil Mengurai Berkas! Terdeteksi ${currentUploadBuffer.length} baris data sales person aktif dari file Excel Anda. Silakan klik tombol "Simpan Permanen Tanggal Ini".`);
-                } else {
-                    alert(`⚠️ Peringatan: Terdeteksi 0 baris data sales person! Kemungkinan format berkas Excel Anda tidak memiliki pola "NIK-NAMA" di baris transaksinya.`);
-                }
+                alert(`Scan Berkas Berhasil! Terdeteksi ${currentUploadBuffer.length} baris data sales.`);
             };
             reader.readAsArrayBuffer(file);
         });
 
         function saveCurrentUploadedKpi() {
             let selectedDate = document.getElementById('kpiSelectDate').value;
-            if(!selectedDate) { alert("Silakan pilih tanggal!"); return; }
-            if(currentUploadBuffer.length === 0) { alert("Data buffer kosong! Scan berkas Excel Anda terlebih dahulu."); return; }
+            if(!selectedDate) { alert("Pilih tanggal!"); return; }
+            if(currentUploadBuffer.length === 0) { alert("Buffer kosong, upload file excel dahulu."); return; }
 
             if(databaseByDates[selectedDate]) {
-                if(!confirm(`Data untuk tanggal ${selectedDate} sudah ada. REPLACE data lama?`)) return;
+                if(!confirm(`Data tanggal ${selectedDate} sudah ada. REPLACE data lama?`)) return;
             }
-
             databaseByDates[selectedDate] = currentUploadBuffer;
             localStorage.setItem('MDS_KPI_DATABASE_DATES', JSON.stringify(databaseByDates));
             alert(`Sukses! Data tanggal ${selectedDate} disimpan.`);
             currentUploadBuffer = [];
-            
             renderSavedDatesTagsUI();
             renderAccumulatedKpiTableUI();
         }
@@ -259,10 +383,7 @@
             const container = document.getElementById('savedDatesTagsContainer');
             container.innerHTML = '';
             let sorted = Object.keys(databaseByDates).sort();
-            if(sorted.length === 0) {
-                container.innerHTML = `<span class="text-slate-500 italic">Belum ada tanggal tersimpan.</span>`;
-                return;
-            }
+            if(sorted.length === 0) { container.innerHTML = `<span class="text-slate-500 italic">Belum ada tanggal tersimpan.</span>`; return; }
             sorted.forEach(dt => {
                 let tag = document.createElement('span');
                 tag.className = "px-2.5 py-1 bg-blue-900 border border-blue-700/50 rounded-lg font-bold text-[10px] text-blue-200 flex items-center gap-1.5 shadow-sm";
@@ -272,21 +393,11 @@
         }
 
         function deleteDateRecordDirectly(dt) {
-            if(confirm(`Hapus data tanggal ${dt}?`)) {
-                delete databaseByDates[dt];
-                localStorage.setItem('MDS_KPI_DATABASE_DATES', JSON.stringify(databaseByDates));
-                renderSavedDatesTagsUI();
-                renderAccumulatedKpiTableUI();
-            }
+            if(confirm(`Hapus data ${dt}?`)) { delete databaseByDates[dt]; localStorage.setItem('MDS_KPI_DATABASE_DATES', JSON.stringify(databaseByDates)); renderSavedDatesTagsUI(); renderAccumulatedKpiTableUI(); }
         }
 
         function clearAllKpiDatabase() {
-            if(confirm("Hapus seluruh isi database lokal browser?")) {
-                databaseByDates = {};
-                localStorage.removeItem('MDS_KPI_DATABASE_DATES');
-                renderSavedDatesTagsUI();
-                renderAccumulatedKpiTableUI();
-            }
+            if(confirm("Reset total database?")) { databaseByDates = {}; localStorage.removeItem('MDS_KPI_DATABASE_DATES'); renderSavedDatesTagsUI(); renderAccumulatedKpiTableUI(); }
         }
 
         function renderAccumulatedKpiTableUI() {
@@ -297,9 +408,7 @@
             Object.keys(databaseByDates).forEach(dt => {
                 databaseByDates[dt].forEach(row => {
                     let key = row.particulars;
-                    if(!masterMap[key]) {
-                        masterMap[key] = { particulars: key, targetSales: 0, netSales: 0, netQty: 0, discount: 0, transCount: 0 };
-                    }
+                    if(!masterMap[key]) masterMap[key] = { particulars: key, targetSales: 0, netSales: 0, netQty: 0, discount: 0, transCount: 0 };
                     masterMap[key].targetSales += row.targetSales;
                     masterMap[key].netSales += row.netSales;
                     masterMap[key].netQty += row.netQty;
@@ -309,10 +418,7 @@
             });
 
             let compiled = Object.values(masterMap);
-            if(compiled.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-400 font-normal">Belum ada data akumulasi.</td></tr>`;
-                return;
-            }
+            if(compiled.length === 0) { tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-slate-400 font-normal">Data kosong. Silakan gunakan tombol unduh template harian di atas, isi data omset Anda, lalu upload untuk melihat akumulasi.</td></tr>`; return; }
 
             compiled.forEach(item => {
                 let tr = document.createElement('tr');
@@ -329,6 +435,77 @@
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        function renderKaryawanTableUI(records) {
+            const tbody = document.getElementById('tableKaryawanMasterBody');
+            tbody.innerHTML = '';
+            records.forEach((item, index) => {
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100 text-slate-700 text-xs";
+                tr.innerHTML = `
+                    <td class="p-3 text-center font-bold text-slate-600">${item.masaKerja}</td>
+                    <td class="p-3 text-center text-slate-400 font-semibold">${item.seq || (index + 1)}</td>
+                    <td class="p-3 text-center font-bold text-slate-500">${item.prefix}</td>
+                    <td class="p-3 text-center font-black">${item.div}</td>
+                    <td class="p-3 font-mono font-bold text-blue-600">${item.id}</td>
+                    <td class="p-3 text-slate-900 font-extrabold uppercase">${item.name}</td>
+                    <td class="p-3 text-slate-600 font-semibold uppercase">${item.brand}</td>
+                    <td class="p-3 text-slate-700 font-bold">${item.spv}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteKaryawanRecord('${item.id}')" class="text-rose-600 hover:text-rose-900 font-bold border-none bg-transparent cursor-pointer">Hapus</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleManualKaryawanSubmit(e) {
+            e.preventDefault();
+            let nik = document.getElementById('fNIK').value.trim();
+            if(employeeMasterDB.some(i => i.id === nik)) { alert("NIK terdaftar!"); return; }
+            let divVal = document.getElementById('fDivisi').value;
+            employeeMasterDB.unshift({
+                masaKerja: document.getElementById('fMasaKerja').value,
+                seq: divVal === 'SA' ? `SA ${employeeMasterDB.length+1}` : `${divVal} ${employeeMasterDB.length+1}`,
+                prefix: document.getElementById('fPrefix').value, div: divVal, id: nik,
+                name: document.getElementById('fNama').value.trim().toUpperCase(),
+                brand: document.getElementById('fBrand').value.trim().toUpperCase(), spv: document.getElementById('fSPV').value
+            });
+            renderKaryawanTableUI(employeeMasterDB);
+            document.getElementById('formKaryawanManual').reset();
+        }
+
+        document.getElementById('uploadDbBatchExcel').addEventListener('change', (e) => {
+            const files = e.target.files;
+            if(!files || files.length === 0) return;
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const arr = new Uint8Array(evt.target.result);
+                const wb = XLSX.read(arr, { type: 'array' });
+                const ws = wb.Sheets[wb.SheetNames[0]];
+                const rows = XLSX.utils.sheet_to_json(ws);
+                rows.forEach((row, idx) => {
+                    let nik = row['Employee ID'] || '';
+                    let name = row['Employee Name'] || '';
+                    if (nik && name && !employeeMasterDB.some(i => i.id === nik.toString().trim())) {
+                        employeeMasterDB.push({
+                            masaKerja: row['Masa Kerja'] || 'Full Time', seq: `${row['Div'] || '1'} ${idx+1}`,
+                            prefix: row['Prefix'] || 'CV', div: (row['Div'] || '1').toString(), id: nik.toString().trim(),
+                            name: name.toString().toUpperCase(), brand: (row['Job Title Name'] || 'GENERAL').toString().toUpperCase(),
+                            spv: (row['SPV'] || 'SALMA').toString().toUpperCase()
+                        });
+                    }
+                });
+                alert("Impor Sukses!");
+                renderKaryawanTableUI(employeeMasterDB);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        function deleteKaryawanRecord(nik) {
+            if(confirm("Hapus?")) { employeeMasterDB = employeeMasterDB.filter(i => i.id !== nik); renderKaryawanTableUI(employeeMasterDB); }
         }
     </script>
 </body>
